@@ -33,9 +33,6 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
     // just call this once on startup
     useEffect(() => {
         const mnemonic = loadOrCreateMnemonic();
-        // TODO: remove this for real
-        console.log(mnemonic);
-
         // On first load, we set the data
         connect(value.httpUrl, mnemonic).then(({address, client}) =>
             setValue({
@@ -43,7 +40,7 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
                 httpUrl: value.httpUrl,
                 address: address,
                 getClient: () => client,
-            }));
+            })).catch(err => console.log(`Error: ${err}`));
 
         // TODO: return a clean-up function???
     }, [value.httpUrl]);

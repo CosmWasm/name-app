@@ -3,6 +3,7 @@ import * as serviceWorker from './serviceWorker';
 import React from "react";
 import ReactDOM from "react-dom";
 
+import App from "./components/App";
 import Routes from "./routes";
 import { SdkProvider } from "./service"
 
@@ -11,7 +12,9 @@ const rootEl = document.getElementById("root");
 const render = (Component: React.ComponentType): void => {
   ReactDOM.render(
     <SdkProvider>
-            <Component />
+      <App>
+        <Component />
+      </App>
     </SdkProvider>,
     rootEl,
   );
