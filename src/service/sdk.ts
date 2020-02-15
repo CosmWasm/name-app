@@ -19,12 +19,17 @@ export function loadOrCreateMnemonic(): string {
     return generated;
 }
 
+export interface ConnectResult {
+    readonly address: string,
+    readonly client: CosmWasmClient,
+}
+
 // this creates a new connection to a server at URL,
 // using a signing keyring generated from the given mnemonic
-export async function connect(httpUrl: string, mnemonic: string): Promise<CosmWasmClient> {    
+export async function connect(httpUrl: string, mnemonic: string): Promise<ConnectResult> {    
     const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
     const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
     const address = encodeAddress(pubkey, "cosmos");
     const client = CosmWasmClient.makeWritable(httpUrl, address, signBytes => pen.sign(signBytes));    
-    return client;
+    return { address, client} ;
 }
