@@ -5,18 +5,28 @@ import { CosmWasmClient } from "@cosmwasm/sdk";
 
 import { connect, loadOrCreateMnemonic } from "./sdk";
 
+export interface AppConfig {
+    readonly httpUrl: string;
+    readonly codeId: number;
+}
+
 export interface ICosmWasmContext {
     readonly loading: boolean;
-    readonly httpUrl: string;
+    readonly config: AppConfig;
     readonly address: string;
     readonly getClient: () => CosmWasmClient;
 }
 
+const defaultConfig = {
+    httpUrl: "http://localhost:1317",
+    codeId: 1,
+};
+
 const defaultContext = {
     loading: true,
-    httpUrl: "http://localhost:1317",
     address: "",
     getClient: (): CosmWasmClient => { throw new Error("not yet initialized") },
+    config: defaultConfig,
 };
 
 export const CosmWasmContext = React.createContext<ICosmWasmContext>(defaultContext);
@@ -34,16 +44,16 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
     useEffect(() => {
         const mnemonic = loadOrCreateMnemonic();
         // On first load, we set the data
-        connect(value.httpUrl, mnemonic).then(({address, client}) =>
+        connect(value.config.httpUrl, mnemonic).then(({address, client}) =>
             setValue({
                 loading: false,
-                httpUrl: value.httpUrl,
                 address: address,
                 getClient: () => client,
+                config: value.config,
             })).catch(err => console.log(`Error: ${err}`));
 
         // TODO: return a clean-up function???
-    }, [value.httpUrl]);
+    }, [value.config]);
 
     return (
         <CosmWasmContext.Provider value={value}>
