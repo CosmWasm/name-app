@@ -1,5 +1,4 @@
-import MuiTypography, { TypographyProps } from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
+import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
 export interface ContractDetailsProps {

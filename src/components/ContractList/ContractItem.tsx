@@ -4,6 +4,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import * as React from "react";
+import { Link } from "react-router-dom";
+
 
 export interface ContractItemProps {
     readonly name: string;
@@ -13,6 +15,7 @@ export interface ContractItemProps {
 export function ContractItem({name, address}: ContractItemProps): JSX.Element {
     // TODO: Make this a link
     return (
+      <Link to={`/contract/${address}`}>
         <ListItem>
           <ListItemAvatar>
             <Avatar>
@@ -21,5 +24,6 @@ export function ContractItem({name, address}: ContractItemProps): JSX.Element {
           </ListItemAvatar>
           <ListItemText primary={name} secondary={address} />
         </ListItem>
+      </Link>
     );
 }
