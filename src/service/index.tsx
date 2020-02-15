@@ -23,11 +23,11 @@ export const CosmWasmContext = React.createContext<ICosmWasmContext>(defaultCont
 
 export const useSdk = () => React.useContext(CosmWasmContext);
 
-export interface SdkManagerProps {
-    readonly children: number;
+export interface SdkProviderProps {
+    children: any,
 }
 
-export function SdkManager(props: SdkManagerProps): JSX.Element {
+export function SdkProvider(props: SdkProviderProps): JSX.Element {
     const [value, setValue] = useState(defaultContext);
 
     // just call this once on startup
@@ -44,9 +44,9 @@ export function SdkManager(props: SdkManagerProps): JSX.Element {
                 address: address,
                 getClient: () => client,
             }));
-            
+
         // TODO: return a clean-up function???
-    }, []);
+    }, [value.httpUrl]);
 
     return (
         <CosmWasmContext.Provider value={value}>

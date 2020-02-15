@@ -2,22 +2,17 @@ import * as serviceWorker from './serviceWorker';
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-// TODO: make this proper
-import { createStore, Reducer, AnyAction } from "redux";
 
 import Routes from "./routes";
-
-const noopReducer: Reducer<any, AnyAction> = state => state;
-const store = createStore(noopReducer);
+import { SdkProvider } from "./service"
 
 const rootEl = document.getElementById("root");
 
 const render = (Component: React.ComponentType): void => {
   ReactDOM.render(
-    <Provider store={store}>
+    <SdkProvider>
             <Component />
-    </Provider>,
+    </SdkProvider>,
     rootEl,
   );
 };

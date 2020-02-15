@@ -1,4 +1,4 @@
-import { CosmWasmClient, Secp256k1Pen, encodeAddress, encodeSecp256k1Pubkey, types } from "@cosmwasm/sdk";
+import { CosmWasmClient, Secp256k1Pen, encodeAddress, encodeSecp256k1Pubkey } from "@cosmwasm/sdk";
 import { Bip39, Random } from "@iov/crypto";
 
 // generateMnemonic will give you a fresh mnemonic
