@@ -19,7 +19,7 @@ export interface ICosmWasmContext {
 }
 
 export const defaultConfig: AppConfig = {
-    httpUrl: "http://localhost:1317",
+    httpUrl: "http://localhost:1318",
 };
 
 const defaultContext: ICosmWasmContext = {

@@ -48,10 +48,3 @@ export async function connect(httpUrl: string, {address, signer}: Wallet): Promi
     const client = CosmWasmClient.makeWritable(httpUrl, address, signer);
     return { address, client} ;
 }
-
-/**
- * TODO: handle CORS - right now we cannot query a REST server without an nginx reverse proxy
- * 
- * https://github.com/cosmos/cosmos-sdk/issues/4622
- * https://github.com/cosmos/cosmos-sdk/issues/4432
- */

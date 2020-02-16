@@ -15,7 +15,7 @@ interface State {
 }
 
 function renderAccount({coins}: types.CosmosSdkAccount): string {
-    return coins.map(({amount, denom}) => `${amount} ${denom}`).join(", ");
+    return coins.map(({amount, denom}) => `${amount} ${denom}`).join(", ") || '(Empty Account)';
 }
 
 function Header(props: HeaderProps): JSX.Element {
