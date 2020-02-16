@@ -1,3 +1,4 @@
+import ky from "ky";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
@@ -20,6 +21,7 @@ export interface ICosmWasmContext {
 
 export const defaultConfig: AppConfig = {
     httpUrl: "http://localhost:1318",
+    faucetUrl: "http://localhost:8000/credit",
 };
 
 const defaultContext: ICosmWasmContext = {
@@ -62,18 +64,28 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
     useEffect(() => {
         loadWallet()
             .then(wallet => connect(config.httpUrl, wallet))
-            .then(({address, client}) => {
+            .then(async ({address, client}) => {
                 const restClient = new RestClient(config.httpUrl);
+                const getAccount = () => restClient.authAccounts(address).then(r => r.result.value);
+                // TODO: load from faucet if needed
+                if (config.faucetUrl) {
+                    const { coins } = await getAccount();
+                    if (!coins || coins.length === 0) {
+                        console.log("Hitting faucet");
+                        const result = await ky.post(config.faucetUrl, {json: {ticker: "COSM", address}});
+                        console.log(result);
+                    }
+                }
                 setValue({
                     loading: false,
                     address: address,
                     getClient: () => client,
-                    getAccount: () => restClient.authAccounts(address).then(r => r.result.value),
+                    getAccount,
                 })
             }).catch(err => console.log(`Error: ${err}`));
 
         // TODO: return a clean-up function???
-    }, [config.httpUrl, loadWallet]);
+    }, [config.httpUrl, config.faucetUrl, loadWallet]);
 
     return (
         <CosmWasmContext.Provider value={value}>

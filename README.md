@@ -24,9 +24,13 @@ Note about CORS: right now we cannot query a REST server without an nginx revers
 * https://github.com/cosmos/cosmos-sdk/issues/4622
 * https://github.com/cosmos/cosmos-sdk/issues/4432
 
-A faucet to provide initial tokens:
+A faucet to provide initial tokens ([see README](https://github.com/confio/cosmwasm-js/tree/master/packages/faucet)):
 
-**TODO**
+```sh
+cd cosmwasm-js
+cd packages/faucet
+yarn dev-start
+```
 
 ## Available Scripts
 
