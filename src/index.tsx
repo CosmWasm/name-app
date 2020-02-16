@@ -5,17 +5,17 @@ import ReactDOM from "react-dom";
 
 import App from "./components/App";
 import Routes from "./routes";
-import { SdkProvider } from "./service"
+import { BurnerWalletProvider, defaultConfig } from "./service"
 
 const rootEl = document.getElementById("root");
 
 const render = (Component: React.ComponentType): void => {
   ReactDOM.render(
-    <SdkProvider>
+    <BurnerWalletProvider config={defaultConfig}>
       <App>
         <Component />
       </App>
-    </SdkProvider>,
+    </BurnerWalletProvider>,
     rootEl,
   );
 };

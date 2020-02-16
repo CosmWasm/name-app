@@ -3,57 +3,72 @@ import { useEffect, useState } from "react";
 
 import { CosmWasmClient } from "@cosmwasm/sdk";
 
-import { connect, loadOrCreateMnemonic } from "./sdk";
+import { burnerWallet, connect, Wallet } from "./sdk";
 
 export interface AppConfig {
     readonly httpUrl: string;
-    readonly codeId: number;
+    readonly faucetUrl?: string;
 }
 
 export interface ICosmWasmContext {
     readonly loading: boolean;
-    readonly config: AppConfig;
     readonly address: string;
     readonly getClient: () => CosmWasmClient;
 }
 
-const defaultConfig = {
+export const defaultConfig: AppConfig = {
     httpUrl: "http://localhost:1317",
-    codeId: 1,
 };
 
-const defaultContext = {
+const defaultContext: ICosmWasmContext = {
     loading: true,
     address: "",
     getClient: (): CosmWasmClient => { throw new Error("not yet initialized") },
-    config: defaultConfig,
 };
 
 export const CosmWasmContext = React.createContext<ICosmWasmContext>(defaultContext);
 
 export const useSdk = () => React.useContext(CosmWasmContext);
 
-export interface SdkProviderProps {
+export interface WalletProviderProps {
+    config: AppConfig,
     children: any,
+}
+
+export interface SdkProviderProps {
+    config: AppConfig,
+    loadWallet: () => Promise<Wallet>,
+    children: any,
+}
+
+
+export function BurnerWalletProvider(props: WalletProviderProps): JSX.Element {
+    return (
+        <SdkProvider config={props.config} loadWallet={burnerWallet}>
+          {props.children}
+        </SdkProvider>
+      );    
 }
 
 export function SdkProvider(props: SdkProviderProps): JSX.Element {
     const [value, setValue] = useState(defaultContext);
 
+    const { config, loadWallet } = props;
+
     // just call this once on startup
     useEffect(() => {
-        const mnemonic = loadOrCreateMnemonic();
-        // On first load, we set the data
-        connect(value.config.httpUrl, mnemonic).then(({address, client}) =>
-            setValue({
-                loading: false,
-                address: address,
-                getClient: () => client,
-                config: value.config,
-            })).catch(err => console.log(`Error: ${err}`));
+        loadWallet()
+            .then(wallet => connect(config.httpUrl, wallet))
+            .then(({address, client}) =>
+                setValue({
+                    loading: false,
+                    address: address,
+                    getClient: () => client,
+                })
+            ).catch(err => console.log(`Error: ${err}`));
 
         // TODO: return a clean-up function???
-    }, [value.config]);
+    }, [config.httpUrl, loadWallet]);
 
     return (
         <CosmWasmContext.Provider value={value}>
