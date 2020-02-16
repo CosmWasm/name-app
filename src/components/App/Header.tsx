@@ -27,10 +27,11 @@ function Header(props: HeaderProps): JSX.Element {
 
     // TODO: periodic updates somehow
     React.useEffect(() => {
+        // TODO: call faucet on zero balance
         getAccount()
             .then(account => setValue({account}))
             .catch(err => setValue({error: `${err}`}));
-    }, [])
+    }, [getAccount])
 
     return (
         <div>
