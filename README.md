@@ -12,18 +12,6 @@ cd cosmwasm-js
 ./scripts/cosm/start.sh
 ```
 
-A CORS proxy to be able to reach the rest server:
-
-```sh
-yarn install -g tinycors
-tinycors --port 1318 localhost:1317
-```
-
-Note about CORS: right now we cannot query a REST server without an nginx reverse proxy:
-
-* https://github.com/cosmos/cosmos-sdk/issues/4622
-* https://github.com/cosmos/cosmos-sdk/issues/4432
-
 A faucet to provide initial tokens ([see README](https://github.com/confio/cosmwasm-js/tree/master/packages/faucet)):
 
 ```sh
