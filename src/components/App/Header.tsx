@@ -1,9 +1,12 @@
+import { ArrowBack } from "@material-ui/icons";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import { types } from "@cosmwasm/sdk";
 
 import { useSdk } from "../../service";
+import { AppBar, IconButton, Toolbar } from "@material-ui/core";
 
 export interface HeaderProps {
     readonly children: any;
@@ -18,7 +21,7 @@ function renderAccount({coins}: types.CosmosSdkAccount): string {
     return coins.map(({amount, denom}) => `${amount} ${denom}`).join(", ") || '(Empty Account)';
 }
 
-function Header(props: HeaderProps): JSX.Element {
+export function Header(props: HeaderProps): JSX.Element {
     const { address, getClient } = useSdk();
 
     const [value, setValue] = React.useState<State>({});
@@ -35,11 +38,18 @@ function Header(props: HeaderProps): JSX.Element {
 
     return (
         <div>
-            <MuiTypography color="secondary" variant="h6">Address: {address}</MuiTypography>
-            <span>Balance: {balance}</span>
+            <AppBar>
+                <Toolbar>
+                    <Link to="/">
+                        <IconButton edge="start" color="inherit">
+                            <ArrowBack />
+                        </IconButton>
+                    </Link>
+                    <MuiTypography variant="h6">{address} - {balance}</MuiTypography>
+                </Toolbar>
+            </AppBar>
+            <Toolbar />
             {props.children}
         </div>
     )
 }
-
-export default Header;

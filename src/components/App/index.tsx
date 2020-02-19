@@ -2,7 +2,8 @@ import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
 import { useSdk } from "../../service";
-import Header from "./Header";
+
+export { Header } from "./Header";
 
 function Loading(): JSX.Element {
     return (
@@ -13,14 +14,15 @@ function Loading(): JSX.Element {
 function App(props: {readonly children: any}): JSX.Element {
     const { loading} = useSdk();
 
+
     if (loading) {
         return <Loading />
     }
 
     return (
-        <Header>
+        <React.Fragment>
             {props.children}
-        </Header>
+        </React.Fragment>
     );
 }
   
