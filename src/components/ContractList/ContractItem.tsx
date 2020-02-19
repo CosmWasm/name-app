@@ -6,14 +6,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-
 export interface ContractItemProps {
-    readonly name: string;
-    readonly address: string;
+  readonly code_id: number;
+  /** Bech32 account address */
+  readonly address: string;
+  readonly creator: string;
+  /** Argument passed on initialization of the contract */
+  readonly init_msg: object;
 }
 
-export function ContractItem({name, address}: ContractItemProps): JSX.Element {
-    // TODO: Make this a link
+export function ContractItem({address, creator}: ContractItemProps): JSX.Element {
     return (
       <Link to={`/contract/${address}`}>
         <ListItem>
@@ -22,7 +24,7 @@ export function ContractItem({name, address}: ContractItemProps): JSX.Element {
               <WorkIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={name} secondary={address} />
+          <ListItemText primary={address} secondary={"created by: " + creator} />
         </ListItem>
       </Link>
     );

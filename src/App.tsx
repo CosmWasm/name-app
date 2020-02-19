@@ -6,20 +6,9 @@ import ContractList from "./components/ContractList";
 import ContractDetails from "./components/ContractDetails";
 
 function App() {
-  const items = [
-      {name: "First Contract", address: "1234567890"},
-      {name: "Second Contract", address: "DEADBEEF"},
-    ];
-  const details = {
-    name: "Tester",
-    address: "0xF00BA3",
-    topName: "Johnny Rocket",
-  };
-
   return (
     <div className="App">
-        <ContractList items={items} />
-        {/* <ContractDetails {...details} /> */}
+        <ContractList />
     </div>
   );
 }

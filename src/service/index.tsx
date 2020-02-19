@@ -2,7 +2,7 @@ import ky from "ky";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { SigningCosmWasmClient, types, RestClient } from "@cosmwasm/sdk";
+import { RestClient, SigningCosmWasmClient } from "@cosmwasm/sdk";
 
 import { burnerWallet, connect, Wallet } from "./sdk";
 
