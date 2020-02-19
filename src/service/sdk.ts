@@ -1,4 +1,4 @@
-import { CosmWasmClient, encodeAddress, encodeSecp256k1Pubkey, Secp256k1Pen, types } from "@cosmwasm/sdk";
+import { SigningCosmWasmClient, encodeAddress, encodeSecp256k1Pubkey, Secp256k1Pen, types } from "@cosmwasm/sdk";
 import { Bip39, Random } from "@iov/crypto";
 
 // generateMnemonic will give you a fresh mnemonic
@@ -21,7 +21,7 @@ export function loadOrCreateMnemonic(): string {
 
 export interface ConnectResult {
     readonly address: string,
-    readonly client: CosmWasmClient,
+    readonly client: SigningCosmWasmClient,
 }
 
 export interface SigningCallback {
@@ -45,6 +45,6 @@ export async function burnerWallet(): Promise<Wallet> {
 // this creates a new connection to a server at URL,
 // using a signing keyring generated from the given mnemonic
 export async function connect(httpUrl: string, {address, signer}: Wallet): Promise<ConnectResult> {    
-    const client = CosmWasmClient.makeWritable(httpUrl, address, signer);
+    const client = new SigningCosmWasmClient(httpUrl, address, signer);
     return { address, client} ;
 }

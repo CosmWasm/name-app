@@ -20,8 +20,8 @@ export interface ICosmWasmContext {
 }
 
 export const defaultConfig: AppConfig = {
-    httpUrl: "http://localhost:1317",
-    faucetUrl: "http://localhost:8000/credit",
+    httpUrl: "http://demo.cosmwasm.com:1317",
+    faucetUrl: "http://demo.cosmwasm.com:8000/credit",
 };
 
 const defaultContext: ICosmWasmContext = {
