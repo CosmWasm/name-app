@@ -2,7 +2,7 @@ import ky from "ky";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { CosmWasmClient, types, RestClient } from "@cosmwasm/sdk";
+import { SigningCosmWasmClient, types, RestClient } from "@cosmwasm/sdk";
 
 import { burnerWallet, connect, Wallet } from "./sdk";
 
@@ -14,9 +14,8 @@ export interface AppConfig {
 export interface ICosmWasmContext {
     readonly loading: boolean;
     readonly address: string;
-    readonly getClient: () => CosmWasmClient;
-    // this should be a method on client, but for now we use RestClient...
-    readonly getAccount: () => Promise<types.CosmosSdkAccount>;
+    readonly getClient: () => SigningCosmWasmClient;
+    readonly getRestClient: () => RestClient;
 }
 
 export const defaultConfig: AppConfig = {
@@ -27,8 +26,8 @@ export const defaultConfig: AppConfig = {
 const defaultContext: ICosmWasmContext = {
     loading: true,
     address: "",
-    getClient: (): CosmWasmClient => { throw new Error("not yet initialized") },
-    getAccount: (): Promise<types.CosmosSdkAccount> => { throw new Error("not yet initialized") },
+    getClient: (): SigningCosmWasmClient => { throw new Error("not yet initialized") },
+    getRestClient: (): RestClient => { throw new Error("not yet initialized") },
 };
 
 export const CosmWasmContext = React.createContext<ICosmWasmContext>(defaultContext);
@@ -45,7 +44,6 @@ export interface SdkProviderProps {
     loadWallet: () => Promise<Wallet>,
     children: any,
 }
-
 
 export function BurnerWalletProvider(props: WalletProviderProps): JSX.Element {
     return (
@@ -65,22 +63,22 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
         loadWallet()
             .then(wallet => connect(config.httpUrl, wallet))
             .then(async ({address, client}) => {
-                const restClient = new RestClient(config.httpUrl);
-                const getAccount = () => restClient.authAccounts(address).then(r => r.result.value);
-                // TODO: load from faucet if needed
+                // load from faucet if needed
                 if (config.faucetUrl) {
-                    const { coins } = await getAccount();
-                    if (!coins || coins.length === 0) {
+                    const acct = await client.getAccount();
+                    if (!acct?.coins?.length) {
                         console.log("Hitting faucet");
                         const result = await ky.post(config.faucetUrl, {json: {ticker: "COSM", address}});
                         console.log(result);
                     }
                 }
+
+                const restClient = new RestClient(config.httpUrl);
                 setValue({
                     loading: false,
                     address: address,
                     getClient: () => client,
-                    getAccount,
+                    getRestClient: () => restClient,
                 })
             }).catch(err => console.log(`Error: ${err}`));
 

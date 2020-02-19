@@ -19,7 +19,7 @@ function renderAccount({coins}: types.CosmosSdkAccount): string {
 }
 
 function Header(props: HeaderProps): JSX.Element {
-    const { address, getAccount } = useSdk();
+    const { address, getClient } = useSdk();
 
     const [value, setValue] = React.useState<State>({});
 
@@ -28,10 +28,10 @@ function Header(props: HeaderProps): JSX.Element {
     // TODO: periodic updates somehow
     React.useEffect(() => {
         // TODO: call faucet on zero balance
-        getAccount()
+        getClient().getAccount()
             .then(account => setValue({account}))
             .catch(err => setValue({error: `${err}`}));
-    }, [getAccount])
+    }, [getClient])
 
     return (
         <div>
