@@ -12,7 +12,7 @@ export interface State {
 }
 
 // TODO: make configurable
-const defaultCodeId = 1;
+const defaultCodeId = 2;
 
 async function listContractsByCodeId(client: RestClient, codeId: number): Promise<readonly ContractItemProps[]> {
     let result = [];

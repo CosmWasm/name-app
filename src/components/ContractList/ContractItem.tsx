@@ -5,6 +5,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { types } from "@cosmwasm/sdk";
 
 export interface ContractItemProps {
   readonly code_id: number;
@@ -15,7 +16,15 @@ export interface ContractItemProps {
   readonly init_msg: object;
 }
 
-export function ContractItem({address, creator}: ContractItemProps): JSX.Element {
+interface InitMsg {
+  readonly name: string;
+  readonly purchase_price?: types.Coin;
+  readonly transfer_price?: types.Coin;
+}
+
+export function ContractItem({address, init_msg}: ContractItemProps): JSX.Element {
+  const { name } = (init_msg as InitMsg);
+
     return (
       <Link to={`/contract/${address}`}>
         <ListItem>
@@ -24,7 +33,7 @@ export function ContractItem({address, creator}: ContractItemProps): JSX.Element
               <WorkIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={address} secondary={"created by: " + creator} />
+          <ListItemText primary={name} secondary={address} />
         </ListItem>
       </Link>
     );
