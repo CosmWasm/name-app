@@ -4,6 +4,8 @@ import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
 import { useSdk } from "../../service";
+import { FormValues }  from "../Form";
+import { TransferForm, ADDRESS_FIELD } from "./TransferForm";
 
 export interface NameDetailsProps {
     readonly contractAddress: string;
@@ -22,7 +24,8 @@ interface InitMsg {
 export function NameDetails(props: NameDetailsProps): JSX.Element {
     const { address, getClient } = useSdk();
 
-    const onClick = async () => {
+    // TODO: add visual feedback for "in process state"
+    const doPurchase = async () => {
         const { purchase_price } = props.contract;
         const payment = purchase_price ? [purchase_price] : undefined;
         console.log("buying")
@@ -35,12 +38,33 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
         }
     }
 
+    const doTransfer = async (values: FormValues) => {
+        const { transfer_price } = props.contract;
+        const payment = transfer_price ? [transfer_price] : undefined;
+        const newOwner = values[ADDRESS_FIELD];
+        console.log("transfering")
+        try {
+            await getClient().execute(props.contractAddress, {transfer: {name: props.name, to: newOwner}}, "Transferring my name", payment);
+            console.log(`Transferred`);
+            if (props.onUpdate) { props.onUpdate(newOwner); }
+        } catch (err) {
+            console.log(`Transfer failed: ${err}`);
+        }
+    }
+
     if (props.owner) {
+        const selfOwned = props.owner === address;
+        if (selfOwned) {
+            return (<div>
+                <MuiTypography color="secondary" variant="h6">You own {props.name}</MuiTypography>
+                <span>Do you want to transfer it?</span>
+                <TransferForm onSubmit={doTransfer} />
+            </div>);
+        }
         return (
             <div>
                 <MuiTypography color="secondary" variant="h6">{props.name} is owned</MuiTypography>
                 <span>Owned by: {props.owner}</span>
-                <span>TODO: add transfer if I am owner</span>
             </div>
         )
     }
@@ -48,9 +72,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
     return (
         <div>
             <MuiTypography variant="h6">{props.name} is free</MuiTypography>
-            <Button type="submit" onClick={onClick}>
-                Buy
-              </Button>
+            <Button color="primary" type="button" onClick={doPurchase}>Buy</Button>
         </div>
     );
 }

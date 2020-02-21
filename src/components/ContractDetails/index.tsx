@@ -6,7 +6,7 @@ import * as React from "react";
 import { NameDetails } from "./NameDetails";
 import { FormValues }  from "../Form";
 import { useSdk } from "../../service";
-import { Form, NAME_FIELD } from "./Form";
+import { SearchForm, NAME_FIELD } from "./SearchForm";
 
 export interface ContractDetailsProps {
     readonly address: string;
@@ -65,7 +65,7 @@ function ContractDetails(props: ContractDetailsProps): JSX.Element {
         if (state.name) {
             getClient()
                 .queryContractSmart(address, {resolverecord: {name: state.name}})
-                .then(res => { const o = parseQueryJson<QueryResponse>(res); console.log(o); setState({name: state.name, owner: o.address, loading: false})})
+                .then(res => { const o = parseQueryJson<QueryResponse>(res); setState({name: state.name, owner: o.address, loading: false})})
                 .catch(err => { console.log(err); setState({name: state.name, loading: false});});
         }
     }, [getClient, address, state.name])
@@ -93,7 +93,7 @@ function ContractDetails(props: ContractDetailsProps): JSX.Element {
                  <li>Purchase price: {coin_str(value.init_msg.purchase_price)}</li>
                  <li>Transfer price: {coin_str(value.init_msg.transfer_price)}</li>
              </ul>
-             <Form onSubmit={onSearch}></Form>
+             <SearchForm onSubmit={onSearch}></SearchForm>
              <hr />
              { state.name ? state.loading ? (<div>Loading...</div>) : (<NameDetails contractAddress={address} name={state.name} owner={state.owner} contract={value.init_msg} onUpdate={onPurchase}/>) : "" }
         </div>

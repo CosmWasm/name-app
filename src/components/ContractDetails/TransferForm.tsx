@@ -6,14 +6,14 @@ import { useForm } from "react-final-form-hooks";
 
 import { composeValidators, longerThan, required, FormValues, TextField }  from "../Form";
 
-export const NAME_FIELD = "nameField";
-const NAME_MIN_LENGTH = 4;
+export const ADDRESS_FIELD = "addressField";
+const ADDRESS_MIN_LENGTH = 45;
 
 interface Props {
     readonly onSubmit: (values: FormValues) => void;
 }
   
-export const Form = (props: Props): JSX.Element => {
+export const TransferForm = (props: Props): JSX.Element => {
     const onSubmit = (values: object) => props.onSubmit(values as FormValues);
   
     const { form, handleSubmit, submitting, invalid } = useForm({
@@ -22,27 +22,26 @@ export const Form = (props: Props): JSX.Element => {
   
     // TODO optimize update of validators with array of dependencies
     const validatorName = useMemo(() => {
-      return composeValidators(required, longerThan(NAME_MIN_LENGTH));
+      // TODO: better check for valid cosmos address
+      return composeValidators(required, longerThan(ADDRESS_MIN_LENGTH));
     }, []);
   
     return (
         <form onSubmit={handleSubmit}>
           <Box display="block" marginTop={2} marginBottom={1}>
             <TextField
-              label="Name"
-              placeholder="Name"
+              label="New Owner"
+              placeholder="cosmos1234567..."
               type="text"
               form={form}
               required
               fullWidth
-              name={NAME_FIELD}
+              name={ADDRESS_FIELD}
               validate={validatorName}
             />
           </Box>
           <Box width={120} display="flex" justifyContent="space-between">
-              <Button fullWidth type="submit" disabled={invalid || submitting}>
-                Search
-              </Button>
+              <Button fullWidth color="primary" type="submit" disabled={invalid || submitting}>Transfer</Button>
           </Box>
         </form>
     );

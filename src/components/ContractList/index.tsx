@@ -46,7 +46,7 @@ function ContractList(): JSX.Element {
     return (
         <List>
             {value.contracts.map(props  => 
-                <ContractItem {...props} key={props.code_id} />
+                <ContractItem {...props} key={props.address} />
             )}
         </List>
     );
