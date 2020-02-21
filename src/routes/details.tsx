@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
 
-import ContractDetails from "../../components/ContractDetails";
+import ContractDetails from "../components/ContractDetails";
 
 function Details() {
     let { address } = useParams();
