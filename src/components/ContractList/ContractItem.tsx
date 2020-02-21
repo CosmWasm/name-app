@@ -1,3 +1,4 @@
+import { types } from "@cosmwasm/sdk";
 import Avatar from "@material-ui/core/Avatar";
 import WorkIcon from "@material-ui/icons/Work";
 import ListItem from "@material-ui/core/ListItem";
@@ -5,7 +6,6 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { types } from "@cosmwasm/sdk";
 
 export interface ContractItemProps {
   readonly code_id: number;
