@@ -2,7 +2,9 @@ import { types } from "@cosmwasm/sdk";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
+import { FormValues }  from "../Form";
 import { useSdk } from "../../service";
+import { Form, NAME_FIELD } from "./Form";
 
 export interface ContractDetailsProps {
     readonly address: string;
@@ -48,6 +50,11 @@ function ContractDetails(props: ContractDetailsProps): JSX.Element {
         )
     }
 
+    const onSearch = (values: FormValues) => {
+        // TODO: actually pull out info
+        console.log(`Search for name: ${values[NAME_FIELD]}`)
+    }
+
     return (
         <div>
              <MuiTypography variant="h5">Details of name service "{value.init_msg.name}":</MuiTypography>
@@ -57,6 +64,7 @@ function ContractDetails(props: ContractDetailsProps): JSX.Element {
                  <li>Purchase price: {coin_str(value.init_msg.purchase_price)}</li>
                  <li>Transfer price: {coin_str(value.init_msg.transfer_price)}</li>
              </ul>
+             <Form onSubmit={onSearch}></Form>
         </div>
     );
 }
