@@ -18,8 +18,8 @@ const render = (Component: React.ComponentType): void => {
         <Splash>
           <Component />
         </Splash>
-      </BurnerWalletProvider>,
-    </ErrorProvider>
+      </BurnerWalletProvider>
+    </ErrorProvider>,
     rootEl,
   );
 };

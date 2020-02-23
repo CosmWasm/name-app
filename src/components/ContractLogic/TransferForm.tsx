@@ -1,9 +1,9 @@
-import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import * as React from "react";
 import { useMemo } from "react";
 import { useForm } from "react-final-form-hooks";
 
+import { Button } from "../../theme";
 import { composeValidators, longerThan, required, FormValues, TextField }  from "../Form";
 
 export const ADDRESS_FIELD = "addressField";

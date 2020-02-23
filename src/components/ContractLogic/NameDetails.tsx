@@ -1,8 +1,8 @@
-import Button from "@material-ui/core/Button";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
 import { useError, useSdk } from "../../service";
+import { Button } from "../../theme";
 import { FormValues }  from "../Form";
 import { InitMsg } from "./ContractInfo";
 import { TransferForm, ADDRESS_FIELD } from "./TransferForm";
