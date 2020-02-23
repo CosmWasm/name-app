@@ -5,7 +5,7 @@ import * as React from "react";
 
 import { NameDetails } from "./NameDetails";
 import { FormValues }  from "../Form";
-import { useSdk } from "../../service";
+import { useError, useSdk } from "../../service";
 import { SearchForm, NAME_FIELD } from "./SearchForm";
 
 export interface ContractDetailsProps {
@@ -18,7 +18,6 @@ export interface ContractInfo {
     readonly creator: string;
     /** Argument passed on initialization of the contract */
     readonly init_msg: InitMsg;
-    readonly error?: string;
 }
 
 export interface State{
@@ -50,6 +49,7 @@ interface QueryResponse {
 function ContractDetails(props: ContractDetailsProps): JSX.Element {
     const { address } = props;
     const { getClient, getRestClient } = useSdk();
+    const { setError } = useError();
 
     const [value, setValue] = React.useState<ContractInfo>(emptyInfo);
     const [state, setState] = React.useState<State>({loading: false});
@@ -58,8 +58,8 @@ function ContractDetails(props: ContractDetailsProps): JSX.Element {
     React.useEffect(() => {
         getRestClient().getContractInfo(address)
             .then(info => setValue(info as ContractInfo))
-            .catch(err => setValue({...emptyInfo, error: `${err}`}));
-    }, [getRestClient, address])
+            .catch(setError);
+    }, [getRestClient, setError, address])
 
     React.useEffect(() => {
         if (state.name) {
@@ -76,12 +76,6 @@ function ContractDetails(props: ContractDetailsProps): JSX.Element {
 
     const onPurchase = (owner: string) => {
         setState({...state, owner});
-    }
-
-    if (value.error) {
-        return (
-            <MuiTypography color="secondary" variant="h6">Error: {value.error}</MuiTypography>
-        )
     }
 
     return (
