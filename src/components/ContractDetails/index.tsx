@@ -66,9 +66,17 @@ function ContractDetails(props: ContractDetailsProps): JSX.Element {
             getClient()
                 .queryContractSmart(address, {resolverecord: {name: state.name}})
                 .then(res => { const o = parseQueryJson<QueryResponse>(res); setState({name: state.name, owner: o.address, loading: false})})
-                .catch(err => { console.log(err); setState({name: state.name, loading: false});});
+                .catch(err => {
+                    // a not found error means it is free, other errors need to be repeated
+                    if (err.toString().includes("NameRecord not found")) {
+                        setState({name: state.name, loading: false});
+                    } else {
+                        setState({loading: false});
+                        setError(err); 
+                    }
+                });
         }
-    }, [getClient, address, state.name])
+    }, [getClient, setError, address, state.name])
 
     const onSearch = (values: FormValues) => {
         setState({name: values[NAME_FIELD], loading: true});

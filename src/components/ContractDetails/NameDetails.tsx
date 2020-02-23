@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
-import { useSdk } from "../../service";
+import { useError, useSdk } from "../../service";
 import { FormValues }  from "../Form";
 import { TransferForm, ADDRESS_FIELD } from "./TransferForm";
 
@@ -23,6 +23,7 @@ interface InitMsg {
 
 export function NameDetails(props: NameDetailsProps): JSX.Element {
     const { address, getClient } = useSdk();
+    const { setError } = useError();
 
     // TODO: add visual feedback for "in process state"
     const doPurchase = async () => {
@@ -34,7 +35,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
             console.log(`Purchased`);
             if (props.onUpdate) { props.onUpdate(address); }
         } catch (err) {
-            console.log(`Purchase failed: ${err}`);
+            setError(err);
         }
     }
 
@@ -48,7 +49,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
             console.log(`Transferred`);
             if (props.onUpdate) { props.onUpdate(newOwner); }
         } catch (err) {
-            console.log(`Transfer failed: ${err}`);
+            setError(err);
         }
     }
 
