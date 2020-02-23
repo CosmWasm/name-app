@@ -13,13 +13,13 @@ const rootEl = document.getElementById("root");
 
 const render = (Component: React.ComponentType): void => {
   ReactDOM.render(
-    <BurnerWalletProvider config={config}>
-      <ErrorProvider>
+    <ErrorProvider>
+      <BurnerWalletProvider config={config}>
         <Splash>
           <Component />
         </Splash>
-      </ErrorProvider>
-    </BurnerWalletProvider>,
+      </BurnerWalletProvider>,
+    </ErrorProvider>
     rootEl,
   );
 };
