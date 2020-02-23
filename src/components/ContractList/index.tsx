@@ -1,19 +1,20 @@
 import { RestClient } from "@cosmwasm/sdk";
 import List from "@material-ui/core/List";
-import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
+import { config } from "../../config";
 import { useSdk } from "../../service";
+import { ErrorMessage } from "../../theme";
 import {ContractItem, ContractItemProps} from "./ContractItem";
+
+const defaultCodeId = config.codeId;
 
 export interface State {
     readonly contracts: readonly ContractItemProps[];
     readonly error?: string;
 }
 
-// TODO: make configurable
-const defaultCodeId = 2;
-
+// TODO: we need to fix rest api, so this is one call (currently the list by code id doesn't return addresses of the contracts)
 async function listContractsByCodeId(client: RestClient, codeId: number): Promise<readonly ContractItemProps[]> {
     let result = [];
     const addrs = await client.listContractAddresses();
@@ -39,9 +40,7 @@ function ContractList(): JSX.Element {
     }, [getRestClient])
 
     if (value.error) {
-        return (
-            <MuiTypography color="secondary" variant="h6">Error: {value.error}</MuiTypography>
-        )
+        return (<ErrorMessage error={value.error} />);
     }
     return (
         <List>
