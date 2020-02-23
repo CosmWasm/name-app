@@ -1,10 +1,10 @@
-import { types } from "@cosmwasm/sdk";
 import Button from "@material-ui/core/Button";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
 import { useError, useSdk } from "../../service";
 import { FormValues }  from "../Form";
+import { InitMsg } from "./ContractInfo";
 import { TransferForm, ADDRESS_FIELD } from "./TransferForm";
 
 export interface NameDetailsProps {
@@ -13,12 +13,6 @@ export interface NameDetailsProps {
     readonly owner?: string;
     readonly contract: InitMsg;
     readonly onUpdate?: (signer: string) => void | Promise<void>;
-}
-  
-interface InitMsg {
-    readonly name: string;
-    readonly purchase_price?: types.Coin;
-    readonly transfer_price?: types.Coin;
 }
 
 export function NameDetails(props: NameDetailsProps): JSX.Element {
@@ -73,7 +67,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
     return (
         <div>
             <MuiTypography variant="h6">{props.name} is free</MuiTypography>
-            <Button color="primary" type="button" onClick={doPurchase}>Buy</Button>
+            <Button color="primary" type="submit" onClick={doPurchase}>Buy</Button>
         </div>
     );
 }

@@ -1,8 +1,7 @@
-import { types } from "@cosmwasm/sdk";
 import { Encoding } from "@iov/encoding";
-import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
+import { ContractInfo, ContractInfoProps } from "./ContractInfo";
 import { NameDetails } from "./NameDetails";
 import { FormValues }  from "../Form";
 import { useError, useSdk } from "../../service";
@@ -12,31 +11,13 @@ export interface ContractDetailsProps {
     readonly address: string;
 }
 
-export interface ContractInfo {
-    readonly code_id: number;
-    /** Bech32 account address */
-    readonly creator: string;
-    /** Argument passed on initialization of the contract */
-    readonly init_msg: InitMsg;
-}
-
 export interface State{
     readonly name?: string;
     readonly owner?: string;
     readonly loading: boolean;
 }
   
-interface InitMsg {
-    readonly name: string;
-    readonly purchase_price?: types.Coin;
-    readonly transfer_price?: types.Coin;
-}
-  
-const emptyInfo = {code_id: 0, creator: "", init_msg: {name: ""}};
-
-function coin_str(coin?: types.Coin): string {
-    return coin ? `${coin.amount} ${coin.denom}` : "0";
-}
+const emptyInfo = {address: "", code_id: 0, creator: "", init_msg: {name: ""}};
 
 function parseQueryJson<T>(raw: Uint8Array): T {
     return JSON.parse(Encoding.fromUtf8(raw));
@@ -51,13 +32,13 @@ function ContractLogic(props: ContractDetailsProps): JSX.Element {
     const { getClient, getRestClient } = useSdk();
     const { setError } = useError();
 
-    const [value, setValue] = React.useState<ContractInfo>(emptyInfo);
+    const [value, setValue] = React.useState<ContractInfoProps>(emptyInfo);
     const [state, setState] = React.useState<State>({loading: false});
 
     // get the contracts
     React.useEffect(() => {
         getRestClient().getContractInfo(address)
-            .then(info => setValue(info as ContractInfo))
+            .then(info => setValue({...info, address} as ContractInfoProps))
             .catch(setError);
     }, [getRestClient, setError, address])
 
@@ -88,13 +69,7 @@ function ContractLogic(props: ContractDetailsProps): JSX.Element {
 
     return (
         <div>
-             <MuiTypography variant="h5">Details of name service "{value.init_msg.name}":</MuiTypography>
-             <ul>
-                 <li>Code ID: {value.code_id}</li>
-                 <li>Address: {address}</li>
-                 <li>Purchase price: {coin_str(value.init_msg.purchase_price)}</li>
-                 <li>Transfer price: {coin_str(value.init_msg.transfer_price)}</li>
-             </ul>
+             <ContractInfo {...value} />
              <SearchForm onSubmit={onSearch}></SearchForm>
              <hr />
              { state.name ? state.loading ? (<div>Loading...</div>) : (<NameDetails contractAddress={address} name={state.name} owner={state.owner} contract={value.init_msg} onUpdate={onPurchase}/>) : "" }
