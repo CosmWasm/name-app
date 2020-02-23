@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { RestClient, SigningCosmWasmClient } from "@cosmwasm/sdk";
 
 import { AppConfig } from "../config";
+import { useError } from "./error";
 import { burnerWallet, connect, Wallet } from "./sdk";
 
 export interface ICosmWasmContext {
@@ -46,6 +47,7 @@ export function BurnerWalletProvider(props: WalletProviderProps): JSX.Element {
 
 export function SdkProvider(props: SdkProviderProps): JSX.Element {
     const [value, setValue] = useState(defaultContext);
+    const { setError } = useError();
 
     const { config, loadWallet } = props;
 
@@ -71,10 +73,10 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
                     getClient: () => client,
                     getRestClient: () => restClient,
                 })
-            }).catch(err => console.log(`Error: ${err}`));
+            }).catch(setError);
 
         // TODO: return a clean-up function???
-    }, [config.httpUrl, config.faucetUrl, loadWallet]);
+    }, [config.httpUrl, config.faucetUrl, loadWallet, setError]);
 
     return (
         <CosmWasmContext.Provider value={value}>

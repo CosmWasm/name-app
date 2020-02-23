@@ -1,28 +1,7 @@
 import * as React from "react";
 
-export interface IErrorContext {
-    readonly error?: string;
-    readonly setError: (err: string) => void;
-    readonly clearError: () => void;
-}
-
-const defaultContext = (): IErrorContext => {
-    return {
-        setError: () => { throw new Error("uninitialized"); } ,
-        clearError: () => { throw new Error("uninitialized"); } ,
-    };
-};
-
-export const ErrorContext = React.createContext<IErrorContext>(defaultContext());
-
-export const useError = () => React.useContext(ErrorContext);
-
-interface State {
-    readonly error?: string;
-}
-
 /*
-This tracker singleton is a bit complex, but the issue is that we want to return the same
+Ugly to use a singleton to manage functions, but the issue is that we want to return the same
 setError, clearError functions to the consumers, so they don't trigger new effects everytime
 we update the error state, which can lead to an infinite loop:
 
@@ -35,34 +14,58 @@ There may be cleaner ways to do this but encapsulating a singleton here seemed f
 (We can't rely on local variables that change each time ErrorProvider() is called).
 */
 
-class ErrorTracker {
-    public callback: (state: State) => void;
+let initError: string | undefined;
 
-    public constructor() {
-        this.callback = () => { throw new Error("no callback set yet") };
-    }
-
-    public setError(err: any): void {
-        console.log(`Set error: ${err}`);
-        const error = (typeof err === "string") ? err : err.toString();
-        this.callback({error});
-    }
-
-    public clearError(): void {
-        console.log(`Clear error`);
-        this.callback({});
-    }
+// this should be set on first render
+let callback = (state: State): void => {
+    // this is overriden on first render
+    initError = state.error; 
 }
 
-const tracker = new ErrorTracker();
+function setError(err: any): void {
+    console.log(`Set error: ${err}`);
+    const error = (typeof err === "string") ? err : err.toString();
+    callback({error});
+}
 
-const setError = tracker.setError.bind(tracker);
-const clearError = tracker.clearError.bind(tracker);
+function clearError(): void {
+    console.log(`Clear error`);
+    callback({});
+}
+
+/******************/
+
+export interface IErrorContext {
+    readonly error?: string;
+    readonly setError: (err: string) => void;
+    readonly clearError: () => void;
+}
+
+const defaultContext = (): IErrorContext => {
+    return {
+        setError,
+        clearError,
+    };
+};
+
+export const ErrorContext = React.createContext<IErrorContext>(defaultContext());
+
+export const useError = () => React.useContext(ErrorContext);
+
+interface State {
+    readonly error?: string;
+}
+
 
 export function ErrorProvider(props: {readonly children: any}): JSX.Element {
     console.log("Re-render ErrorProvider");
     const [value, setValue] = React.useState<State>({});
-    tracker.callback = setValue;
+    callback = setValue;
+    // if there is an error before we render the first time, make sure we render it
+    if (initError) {
+        setValue({error: initError});
+        initError = undefined;
+    }
 
     const context: IErrorContext = {
         error: value.error,

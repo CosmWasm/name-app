@@ -18,7 +18,7 @@ const demo: AppConfig = {
     codeId: 2,
 };
 
-// TODO: set this via env variable 
-const isLocal = true;
+// REACT_APP_LOCAL is set via `yarn start:local`
+const isLocal = process.env.NODE_ENV !== "production" && !!process.env.REACT_APP_LOCAL;
 
 export const config = isLocal ? local : demo;
