@@ -46,7 +46,7 @@ interface QueryResponse {
     readonly address: string;
 }
 
-function ContractDetails(props: ContractDetailsProps): JSX.Element {
+function ContractLogic(props: ContractDetailsProps): JSX.Element {
     const { address } = props;
     const { getClient, getRestClient } = useSdk();
     const { setError } = useError();
@@ -102,5 +102,5 @@ function ContractDetails(props: ContractDetailsProps): JSX.Element {
     );
 }
   
-export default ContractDetails;
+export default ContractLogic;
   

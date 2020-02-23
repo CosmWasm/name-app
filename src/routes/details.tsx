@@ -1,13 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router';
 
-import ContractDetails from "../components/ContractDetails";
+import ContractLogic from "../components/ContractLogic";
 
 function Details() {
     let { address } = useParams();
 
   return (
-        <ContractDetails address={address || ""} />
+        <ContractLogic address={address || ""} />
   );
 }
 
