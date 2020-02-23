@@ -4,12 +4,8 @@ import { useEffect, useState } from "react";
 
 import { RestClient, SigningCosmWasmClient } from "@cosmwasm/sdk";
 
+import { AppConfig } from "../config";
 import { burnerWallet, connect, Wallet } from "./sdk";
-
-export interface AppConfig {
-    readonly httpUrl: string;
-    readonly faucetUrl?: string;
-}
 
 export interface ICosmWasmContext {
     readonly loading: boolean;
@@ -17,11 +13,6 @@ export interface ICosmWasmContext {
     readonly getClient: () => SigningCosmWasmClient;
     readonly getRestClient: () => RestClient;
 }
-
-export const defaultConfig: AppConfig = {
-    httpUrl: "https://lcd.demo.cosmwasm.com",
-    faucetUrl: "https://faucet.demo.cosmwasm.com/credit",
-};
 
 const defaultContext: ICosmWasmContext = {
     loading: true,

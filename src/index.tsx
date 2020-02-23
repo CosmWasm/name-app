@@ -4,7 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { config } from "./config";
-import App from "./components/App";
+import Splash from "./components/Splash";
 import Routes from "./routes";
 import { BurnerWalletProvider } from "./service"
 
@@ -14,9 +14,9 @@ const rootEl = document.getElementById("root");
 const render = (Component: React.ComponentType): void => {
   ReactDOM.render(
     <BurnerWalletProvider config={config}>
-      <App>
+      <Splash>
         <Component />
-      </App>
+      </Splash>
     </BurnerWalletProvider>,
     rootEl,
   );
