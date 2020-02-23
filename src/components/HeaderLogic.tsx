@@ -1,17 +1,17 @@
 import { types } from "@cosmwasm/sdk";
 import * as React from "react";
 
-import { useSdk } from "../service";
+import { useError, useSdk } from "../service";
 import { Header } from "../theme";
 
 interface State {
     readonly account?: types.CosmosSdkAccount;
-    readonly error?: string;
 }
 
 // HeaderLogic calculates the values to render the header component (which can be theme'd)
 function HeaderLogic(): JSX.Element {
     const { getClient } = useSdk();
+    const { setError } = useError();
 
     const [value, setValue] = React.useState<State>({});
 
@@ -20,8 +20,8 @@ function HeaderLogic(): JSX.Element {
         // TODO: call faucet on zero balance
         getClient().getAccount()
             .then(account => setValue({account}))
-            .catch(err => setValue({error: `${err}`}));
-    }, [getClient])
+            .catch(setError);
+    }, [getClient, setError])
 
     return (<Header {...value}/>);    
 }
