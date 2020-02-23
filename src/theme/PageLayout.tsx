@@ -1,10 +1,14 @@
 import * as React from "react";
 
-export function PageLayout(props: {readonly children: any}): JSX.Element {
-    // Here you can provide any generic styling that you wish to provide on the page
+interface Props {
+    readonly children: any;
+};
+
+// TODO: add any global styling here
+export function PageLayout({children}: Props): JSX.Element {
     return (
         <React.Fragment>
-            {props.children}
+            {children}
         </React.Fragment>
     );
 }
