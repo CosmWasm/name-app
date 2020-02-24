@@ -78,6 +78,10 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
         }
     }
 
+    // TODO: clean up all this logic. 
+    // Use separate route for the transfer form (just inline the button, then new page for form)
+    // TODO: better loading state feedback
+
     if (state.owner) {
         const selfOwned = state.owner === address;
         if (selfOwned) {
