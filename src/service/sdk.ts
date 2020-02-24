@@ -1,4 +1,4 @@
-import { SigningCosmWasmClient, encodeAddress, encodeSecp256k1Pubkey, Secp256k1Pen, types } from "@cosmwasm/sdk";
+import { SigningCosmWasmClient, SigningCallback, encodeAddress, encodeSecp256k1Pubkey, Secp256k1Pen } from "@cosmwasm/sdk";
 import { Bip39, Random } from "@iov/crypto";
 
 // generateMnemonic will give you a fresh mnemonic
@@ -22,10 +22,6 @@ export function loadOrCreateMnemonic(): string {
 export interface ConnectResult {
     readonly address: string,
     readonly client: SigningCosmWasmClient,
-}
-
-export interface SigningCallback {
-    (signBytes: Uint8Array): Promise<types.StdSignature>;
 }
   
 export interface Wallet {
