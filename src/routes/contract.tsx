@@ -3,12 +3,12 @@ import { useParams } from 'react-router';
 
 import ContractLogic from "../components/ContractLogic";
 
-function Details() {
-    let { address } = useParams();
+function ContractSearch() {
+  let { address } = useParams();
 
   return (
         <ContractLogic address={address || ""} />
   );
 }
 
-export default Details;
+export default ContractSearch;
