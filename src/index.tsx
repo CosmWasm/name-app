@@ -3,6 +3,7 @@ import * as serviceWorker from './serviceWorker';
 import React from "react";
 import ReactDOM from "react-dom";
 
+import './index.css'
 import { config } from "./config";
 import Splash from "./components/Splash";
 import Routes from "./routes";
