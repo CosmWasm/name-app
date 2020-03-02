@@ -2,7 +2,7 @@ import ky from "ky";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { RestClient, SigningCosmWasmClient } from "@cosmwasm/sdk";
+import { SigningCosmWasmClient } from "@cosmwasm/sdk";
 
 import { AppConfig } from "../config";
 import { useError } from "./error";
@@ -12,14 +12,12 @@ export interface ICosmWasmContext {
     readonly loading: boolean;
     readonly address: string;
     readonly getClient: () => SigningCosmWasmClient;
-    readonly getRestClient: () => RestClient;
 }
 
 const defaultContext: ICosmWasmContext = {
     loading: true,
     address: "",
     getClient: (): SigningCosmWasmClient => { throw new Error("not yet initialized") },
-    getRestClient: (): RestClient => { throw new Error("not yet initialized") },
 };
 
 export const CosmWasmContext = React.createContext<ICosmWasmContext>(defaultContext);
@@ -59,19 +57,17 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
                 // load from faucet if needed
                 if (config.faucetUrl) {
                     const acct = await client.getAccount();
-                    if (!acct?.coins?.length) {
+                    if (!acct?.balance?.length) {
                         console.log("Hitting faucet");
                         const result = await ky.post(config.faucetUrl, {json: {ticker: "COSM", address}});
                         console.log(result);
                     }
                 }
 
-                const restClient = new RestClient(config.httpUrl);
                 setValue({
                     loading: false,
                     address: address,
                     getClient: () => client,
-                    getRestClient: () => restClient,
                 })
             }).catch(setError);
 
