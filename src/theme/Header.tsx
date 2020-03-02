@@ -50,7 +50,7 @@ export function Header({account, children}: HeaderProps, props: any): JSX.Elemen
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>
-        <Toolbar />
+            <Toolbar />
         </React.Fragment>
     );
 }
