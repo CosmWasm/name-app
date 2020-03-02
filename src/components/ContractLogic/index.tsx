@@ -12,11 +12,16 @@ export interface ContractDetailsProps {
     readonly name?: string;
 }
 
-const emptyInfo = {address: "", code_id: 0, creator: "", init_msg: {name: ""}};
+const emptyInfo: ContractInfoProps = {
+  address: "",
+  codeId: 0,
+  creator: "",
+  label: "",
+  initMsg: {}
+};
 
-function ContractLogic(props: ContractDetailsProps): JSX.Element {
-    const { address, name } = props;
-    const { getRestClient } = useSdk();
+function ContractLogic({ address, name }: ContractDetailsProps): JSX.Element {
+    const { getClient } = useSdk();
     const { setError } = useError();
     const history = useHistory();
 
@@ -24,10 +29,10 @@ function ContractLogic(props: ContractDetailsProps): JSX.Element {
 
     // get the contracts
     React.useEffect(() => {
-        getRestClient().getContractInfo(address)
-            .then(info => setValue({...info, address} as ContractInfoProps))
+        getClient().getContract(address)
+            .then(info => setValue({...info, address}))
             .catch(setError);
-    }, [getRestClient, setError, address])
+    }, [setError, address, getClient]);
 
     const onSearch = (values: FormValues) => {
         const searchName = values[NAME_FIELD];
@@ -40,7 +45,7 @@ function ContractLogic(props: ContractDetailsProps): JSX.Element {
         <div>
              <ContractInfo {...value} />
              <SearchForm handleSearch={onSearch}></SearchForm>
-             { name ? (<NameDetails contractAddress={address} name={name} contract={value.init_msg} />) : "" }
+             { name ? (<NameDetails contractAddress={address} name={name} contract={value.initMsg} />) : "" }
         </div>
     );
 }

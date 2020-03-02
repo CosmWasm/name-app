@@ -1,4 +1,4 @@
-import { types } from "@cosmwasm/sdk";
+import { Account } from "@cosmwasm/sdk";
 import { AppBar, IconButton, Toolbar } from "@material-ui/core";
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import MuiTypography from "@material-ui/core/Typography";
@@ -20,13 +20,13 @@ function ElevationScroll(props: any) {
   }
 
 export interface HeaderProps {
-    readonly account?: types.CosmosSdkAccount;
+    readonly account?: Account;
     children?: React.ReactElement;
 }
 
 
-function renderBalance({coins}: types.CosmosSdkAccount): string {
-    return coins.map(({amount, denom}) => `${amount} ${denom}`).join(", ") || '(Empty Account)';
+function renderBalance({ balance }: Account): string {
+    return balance.map(({amount, denom}) => `${amount} ${denom}`).join(", ") || '(Empty Account)';
 }
 
 
