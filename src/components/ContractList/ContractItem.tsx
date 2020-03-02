@@ -12,7 +12,6 @@ export interface ContractItemProps {
   /** Bech32 account address */
   readonly address: string;
   readonly creator: string;
-  /** Argument passed on initialization of the contract */
   readonly label: string;
 }
 
