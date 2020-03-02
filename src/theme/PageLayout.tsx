@@ -6,6 +6,8 @@ import * as React from "react";
 const useStyles = makeStyles({
     root: {
       flexGrow: 1,
+      height: '100vh',
+      background: '#ebf5fc',
     },
 });
 

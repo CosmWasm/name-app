@@ -1,9 +1,9 @@
+import * as React from "react";
 import { Encoding } from "@iov/encoding";
 import MuiTypography from "@material-ui/core/Typography";
-import * as React from "react";
 
 import { useError, useSdk } from "../../service";
-import { Button } from "../../theme";
+import { Button, useBaseStyles } from "../../theme";
 import { FormValues }  from "../Form";
 import { InitMsg } from "./ContractInfo";
 import { TransferForm, ADDRESS_FIELD } from "./TransferForm";
@@ -28,6 +28,7 @@ interface QueryResponse {
 }
 
 export function NameDetails(props: NameDetailsProps): JSX.Element {
+    const classes = useBaseStyles()
     const { name, contractAddress } = props;
     const { address, getClient } = useSdk();
     const { setError } = useError();
@@ -43,7 +44,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
                     setState({loading: false});
                     // a not found error means it is free, other errors need to be reported
                     if (!err.toString().includes("NameRecord not found")) {
-                        setError(err); 
+                        setError(err);
                     }
                 });
     }, [getClient, setError, contractAddress, name])
@@ -67,7 +68,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
         const payment = transfer_price ? [transfer_price] : undefined;
         const newOwner = values[ADDRESS_FIELD];
         setState({loading: true});
-        console.log("transfering")
+        console.log("transferring")
         try {
             await getClient().execute(props.contractAddress, {transfer: {name: props.name, to: newOwner}}, "Transferring my name", payment);
             console.log(`Transferred`);
@@ -78,21 +79,21 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
         }
     }
 
-    // TODO: clean up all this logic. 
+    // TODO: clean up all this logic.
     // Use separate route for the transfer form (just inline the button, then new page for form)
     // TODO: better loading state feedback
 
     if (state.owner) {
         const selfOwned = state.owner === address;
         if (selfOwned) {
-            return (<div>
+            return (<div className={classes.card}>
                 <MuiTypography color="secondary" variant="h6">You own {props.name}</MuiTypography>
-                <span>Do you want to transfer it?</span>
-                <TransferForm onSubmit={doTransfer} />
+                <MuiTypography className={classes.bottomSpacer} variant="body2">Do you want to transfer it?</MuiTypography>
+                <TransferForm handleTransfer={doTransfer} />
             </div>);
         }
         return (
-            <div>
+            <div className={classes.card}>
                 <MuiTypography color="secondary" variant="h6">{props.name} is owned</MuiTypography>
                 <span>Owned by: {state.owner}</span>
             </div>
@@ -100,8 +101,8 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
     }
 
     return (
-        <div>
-            <MuiTypography variant="h6">{props.name} is free</MuiTypography>
+        <div className={classes.card}>
+            <MuiTypography className={classes.isFree} variant="h6">{props.name} is free</MuiTypography>
             <Button color="primary" type="submit" onClick={doPurchase}>Buy</Button>
         </div>
     );

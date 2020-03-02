@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+form div .MuiInput-underline:before,
+form div .MuiInput-underline:after,
+form div .MuiInput-underline.Mui-error:after {
+  content: none;
+  border-bottom: 'none';
+}
+
+form div .MuiFormHelperText-root.Mui-error {
+  position: absolute;
+  top: 40px;
+  left: 15px;
+}

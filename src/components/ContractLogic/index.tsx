@@ -39,12 +39,10 @@ function ContractLogic(props: ContractDetailsProps): JSX.Element {
     return (
         <div>
              <ContractInfo {...value} />
-             <SearchForm onSubmit={onSearch}></SearchForm>
-             <hr />
+             <SearchForm handleSearch={onSearch}></SearchForm>
              { name ? (<NameDetails contractAddress={address} name={name} contract={value.init_msg} />) : "" }
         </div>
     );
 }
-  
+
 export default ContractLogic;
-  
