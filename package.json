@@ -2,6 +2,11 @@
   "name": "name-app",
   "version": "0.1.0",
   "private": true,
+  "license": "Apache-2.0",
+  "contributors": [
+    "Ethan Frey <ethanfrey@users.noreply.github.com>",
+    "Simon Warta"
+  ],
   "homepage": "http://confio.github.io/name-app/",
   "dependencies": {
     "@cosmwasm/sdk": "^0.7.0-alpha.5",
