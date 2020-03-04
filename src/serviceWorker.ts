@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -57,8 +59,8 @@ export function register(config?: Config): void {
   }
 }
 
-function registerValidSW(swUrl: string, config?: Config) {
-  navigator.serviceWorker
+function registerValidSW(swUrl: string, config?: Config): Promise<void> {
+  return navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
       registration.onupdatefound = () => {
@@ -101,9 +103,9 @@ function registerValidSW(swUrl: string, config?: Config) {
     });
 }
 
-function checkValidServiceWorker(swUrl: string, config?: Config) {
+function checkValidServiceWorker(swUrl: string, config?: Config): Promise<void> {
   // Check if the service worker can be found. If it can't reload the page.
-  fetch(swUrl, {
+  return fetch(swUrl, {
     headers: { "Service-Worker": "script" },
   })
     .then(response => {
@@ -126,9 +128,9 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
     });
 }
 
-export function unregister() {
+export async function unregister(): Promise<void> {
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.ready
+    await navigator.serviceWorker.ready
       .then(registration => {
         registration.unregister();
       })
