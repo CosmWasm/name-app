@@ -23,41 +23,38 @@ let callback = (state: State): void => {
 };
 
 function setError(err: any): void {
-  console.log(`Set error: ${err}`);
   const error = typeof err === "string" ? err : err.toString();
   callback({ error });
 }
 
 function clearError(): void {
-  console.log(`Clear error`);
   callback({});
 }
 
 /** ****************/
 
-export interface IErrorContext {
+export interface ErrorContextType {
   readonly error?: string;
   readonly setError: (err: string) => void;
   readonly clearError: () => void;
 }
 
-const defaultContext = (): IErrorContext => {
+const defaultContext = (): ErrorContextType => {
   return {
     setError,
     clearError,
   };
 };
 
-export const ErrorContext = React.createContext<IErrorContext>(defaultContext());
+export const ErrorContext = React.createContext<ErrorContextType>(defaultContext());
 
-export const useError = () => React.useContext(ErrorContext);
+export const useError = (): ErrorContextType => React.useContext(ErrorContext);
 
 interface State {
   readonly error?: string;
 }
 
 export function ErrorProvider(props: { readonly children: any }): JSX.Element {
-  console.log("Re-render ErrorProvider");
   const [value, setValue] = React.useState<State>({});
   callback = setValue;
   // if there is an error before we render the first time, make sure we render it
@@ -66,7 +63,7 @@ export function ErrorProvider(props: { readonly children: any }): JSX.Element {
     initError = undefined;
   }
 
-  const context: IErrorContext = {
+  const context: ErrorContextType = {
     error: value.error,
     setError,
     clearError,

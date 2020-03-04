@@ -35,12 +35,10 @@ function ContractLogic({ address, name }: ContractDetailsProps): JSX.Element {
       .catch(setError);
   }, [setError, address, getClient]);
 
-  const onSearch = (values: FormValues) => {
+  const onSearch = (values: FormValues): void => {
     const searchName = values[NAME_FIELD];
     history.push(`/contract/${address}/details/${searchName}`);
   };
-
-  console.log(`ContractLogic with ${name}`);
 
   return (
     <div>

@@ -19,7 +19,7 @@ export interface ContractInfoProps {
   readonly initMsg: InitMsg;
 }
 
-function coin_str(coin?: types.Coin): string {
+function coinStr(coin?: types.Coin): string {
   return coin ? `${coin.amount} ${coin.denom}` : "0";
 }
 
@@ -37,10 +37,10 @@ export function ContractInfo(props: ContractInfoProps): JSX.Element {
           <p>Address:</p> <p>{props.address}</p>
         </li>
         <li>
-          <p>Purchase price:</p> <p>{coin_str(props.initMsg.purchase_price)}</p>
+          <p>Purchase price:</p> <p>{coinStr(props.initMsg.purchase_price)}</p>
         </li>
         <li>
-          <p>Transfer price:</p> <p>{coin_str(props.initMsg.transfer_price)}</p>
+          <p>Transfer price:</p> <p>{coinStr(props.initMsg.transfer_price)}</p>
         </li>
       </ul>
     </div>

@@ -6,7 +6,11 @@ import { ArrowBack } from "@material-ui/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-function ElevationScroll(props: any) {
+interface ElevationScrollProps {
+  readonly children: any;
+}
+
+function ElevationScroll(props: ElevationScrollProps): JSX.Element {
   const { children } = props;
   const trigger = useScrollTrigger({
     disableHysteresis: true,

@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 
 import ContractLogic from "../components/ContractLogic";
 
-function ContractSearch() {
+function ContractSearch(): JSX.Element {
   const { address } = useParams();
 
   return <ContractLogic address={address || ""} />;

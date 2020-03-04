@@ -53,10 +53,10 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
   }, [getClient, setError, contractAddress, name]);
 
   // TODO: add visual feedback for "in process state"
-  const doPurchase = async () => {
-    const { purchase_price } = props.contract;
-    const payment = purchase_price ? [purchase_price] : undefined;
-    console.log("buying");
+  const doPurchase = async (): Promise<boolean> => {
+    /* eslint-disable-next-line @typescript-eslint/camelcase */
+    const { purchase_price: purchasePrice } = props.contract;
+    const payment = purchasePrice ? [purchasePrice] : undefined;
     try {
       await getClient().execute(
         contractAddress,
@@ -64,19 +64,18 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
         "Buying my name",
         payment,
       );
-      console.log(`Purchased`);
       setState({ owner: address, loading: false });
     } catch (err) {
       setError(err);
     }
+    return true;
   };
 
-  const doTransfer = async (values: FormValues) => {
-    const { transfer_price } = props.contract;
-    const payment = transfer_price ? [transfer_price] : undefined;
+  const doTransfer = async (values: FormValues): Promise<void> => {
+    const { transfer_price: transferPrice } = props.contract;
+    const payment = transferPrice ? [transferPrice] : undefined;
     const newOwner = values[ADDRESS_FIELD];
     setState({ loading: true });
-    console.log("transferring");
     try {
       await getClient().execute(
         props.contractAddress,
@@ -84,7 +83,6 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
         "Transferring my name",
         payment,
       );
-      console.log(`Transferred`);
       setState({ owner: newOwner, loading: false });
     } catch (err) {
       setState({ loading: false });

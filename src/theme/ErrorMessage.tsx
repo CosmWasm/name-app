@@ -8,7 +8,6 @@ export interface ErrorMessageProps {
 
 // This is a page body to display when there is an error
 export function ErrorMessage({ error, clearError }: ErrorMessageProps): JSX.Element {
-  console.log("Render ErrorMessage");
   return (
     <MuiTypography color="secondary" variant="h6" onClick={clearError}>
       Error: {error}

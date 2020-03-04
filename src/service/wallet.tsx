@@ -7,13 +7,13 @@ import { AppConfig } from "../config";
 import { useError } from "./error";
 import { burnerWallet, connect, Wallet } from "./sdk";
 
-export interface ICosmWasmContext {
+export interface CosmWasmContextType {
   readonly loading: boolean;
   readonly address: string;
   readonly getClient: () => SigningCosmWasmClient;
 }
 
-const defaultContext: ICosmWasmContext = {
+const defaultContext: CosmWasmContextType = {
   loading: true,
   address: "",
   getClient: (): SigningCosmWasmClient => {
@@ -21,9 +21,9 @@ const defaultContext: ICosmWasmContext = {
   },
 };
 
-export const CosmWasmContext = React.createContext<ICosmWasmContext>(defaultContext);
+export const CosmWasmContext = React.createContext<CosmWasmContextType>(defaultContext);
 
-export const useSdk = () => React.useContext(CosmWasmContext);
+export const useSdk = (): CosmWasmContextType => React.useContext(CosmWasmContext);
 
 export interface WalletProviderProps {
   config: AppConfig;
@@ -59,9 +59,7 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
         if (config.faucetUrl) {
           const acct = await client.getAccount();
           if (!acct?.balance?.length) {
-            console.log("Hitting faucet");
-            const result = await ky.post(config.faucetUrl, { json: { ticker: "COSM", address } });
-            console.log(result);
+            await ky.post(config.faucetUrl, { json: { ticker: "COSM", address } });
           }
         }
 

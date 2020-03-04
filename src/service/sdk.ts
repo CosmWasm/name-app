@@ -5,6 +5,7 @@ import {
   SigningCallback,
   SigningCosmWasmClient,
 } from "@cosmwasm/sdk";
+import { StdSignature } from "@cosmwasm/sdk/types/types";
 import { Bip39, Random } from "@iov/crypto";
 
 // generateMnemonic will give you a fresh mnemonic
@@ -40,7 +41,7 @@ export async function burnerWallet(): Promise<Wallet> {
   const pen = await Secp256k1Pen.fromMnemonic(mnemonic);
   const pubkey = encodeSecp256k1Pubkey(pen.pubkey);
   const address = pubkeyToAddress(pubkey, "cosmos");
-  const signer = (signBytes: Uint8Array) => pen.sign(signBytes);
+  const signer = (signBytes: Uint8Array): Promise<StdSignature> => pen.sign(signBytes);
   return { address, signer };
 }
 
