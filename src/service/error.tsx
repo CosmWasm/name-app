@@ -18,34 +18,34 @@ let initError: string | undefined;
 
 // this should be set on first render
 let callback = (state: State): void => {
-    // this is overriden on first render
-    initError = state.error; 
-}
+  // this is overriden on first render
+  initError = state.error;
+};
 
 function setError(err: any): void {
-    console.log(`Set error: ${err}`);
-    const error = (typeof err === "string") ? err : err.toString();
-    callback({error});
+  console.log(`Set error: ${err}`);
+  const error = typeof err === "string" ? err : err.toString();
+  callback({ error });
 }
 
 function clearError(): void {
-    console.log(`Clear error`);
-    callback({});
+  console.log(`Clear error`);
+  callback({});
 }
 
-/******************/
+/** ****************/
 
 export interface IErrorContext {
-    readonly error?: string;
-    readonly setError: (err: string) => void;
-    readonly clearError: () => void;
+  readonly error?: string;
+  readonly setError: (err: string) => void;
+  readonly clearError: () => void;
 }
 
 const defaultContext = (): IErrorContext => {
-    return {
-        setError,
-        clearError,
-    };
+  return {
+    setError,
+    clearError,
+  };
 };
 
 export const ErrorContext = React.createContext<IErrorContext>(defaultContext());
@@ -53,29 +53,24 @@ export const ErrorContext = React.createContext<IErrorContext>(defaultContext())
 export const useError = () => React.useContext(ErrorContext);
 
 interface State {
-    readonly error?: string;
+  readonly error?: string;
 }
 
+export function ErrorProvider(props: { readonly children: any }): JSX.Element {
+  console.log("Re-render ErrorProvider");
+  const [value, setValue] = React.useState<State>({});
+  callback = setValue;
+  // if there is an error before we render the first time, make sure we render it
+  if (initError) {
+    setValue({ error: initError });
+    initError = undefined;
+  }
 
-export function ErrorProvider(props: {readonly children: any}): JSX.Element {
-    console.log("Re-render ErrorProvider");
-    const [value, setValue] = React.useState<State>({});
-    callback = setValue;
-    // if there is an error before we render the first time, make sure we render it
-    if (initError) {
-        setValue({error: initError});
-        initError = undefined;
-    }
+  const context: IErrorContext = {
+    error: value.error,
+    setError,
+    clearError,
+  };
 
-    const context: IErrorContext = {
-        error: value.error,
-        setError,
-        clearError,
-    };
-
-    return (
-        <ErrorContext.Provider value={context}>
-          {props.children}
-        </ErrorContext.Provider>
-      );    
+  return <ErrorContext.Provider value={context}>{props.children}</ErrorContext.Provider>;
 }

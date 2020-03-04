@@ -39,32 +39,30 @@ export const TextField = ({ name, form, validate, onChanged, ...restProps }: Pro
   );
 };
 
-
 export const longerThan = (minLength: number): FieldValidator<FieldInputValue> => {
-    return (value): ValidationError => {
-      if (value && value.length < minLength) {
-        return `Must be longer than ${minLength} characters`;
-      }
-  
-      return undefined;
-    };
-  };
+  return (value): ValidationError => {
+    if (value && value.length < minLength) {
+      return `Must be longer than ${minLength} characters`;
+    }
 
-  export function composeValidators<T>(...validators: readonly FieldValidator<T>[]): FieldValidator<T> {
-    return (value, allValues, meta): ValidationError => {
-      for (const validator of validators) {
-        const validationError = validator(value, allValues, meta);
-  
-        if (validationError) {
-          return validationError;
-        }
-      }
-  
-      return undefined;
-    };
-  }
-
-  export const required: FieldValidator<FieldInputValue> = (value): ValidationError => {
-    return value ? undefined : "Required";
+    return undefined;
   };
-  
+};
+
+export function composeValidators<T>(...validators: readonly FieldValidator<T>[]): FieldValidator<T> {
+  return (value, allValues, meta): ValidationError => {
+    for (const validator of validators) {
+      const validationError = validator(value, allValues, meta);
+
+      if (validationError) {
+        return validationError;
+      }
+    }
+
+    return undefined;
+  };
+}
+
+export const required: FieldValidator<FieldInputValue> = (value): ValidationError => {
+  return value ? undefined : "Required";
+};

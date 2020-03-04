@@ -1,14 +1,13 @@
-import * as serviceWorker from './serviceWorker';
+import "./index.css";
 
 import React from "react";
 import ReactDOM from "react-dom";
 
-import './index.css'
-import { config } from "./config";
 import Splash from "./components/Splash";
+import { config } from "./config";
 import Routes from "./routes";
-import { BurnerWalletProvider, ErrorProvider } from "./service"
-
+import { BurnerWalletProvider, ErrorProvider } from "./service";
+import * as serviceWorker from "./serviceWorker";
 
 const rootEl = document.getElementById("root");
 
