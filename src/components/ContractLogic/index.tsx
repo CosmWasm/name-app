@@ -2,6 +2,7 @@ import * as React from "react";
 import { useHistory } from "react-router-dom";
 
 import { useError, useSdk } from "../../service";
+import { useBaseStyles } from "../../theme";
 import { FormValues } from "../Form";
 import { ContractInfo, ContractInfoProps } from "./ContractInfo";
 import { NameDetails } from "./NameDetails";
@@ -21,6 +22,7 @@ const emptyInfo: ContractInfoProps = {
 };
 
 function ContractLogic({ address, name }: ContractDetailsProps): JSX.Element {
+  const classes = useBaseStyles();
   const { getClient } = useSdk();
   const { setError } = useError();
   const history = useHistory();
@@ -41,7 +43,7 @@ function ContractLogic({ address, name }: ContractDetailsProps): JSX.Element {
   };
 
   return (
-    <div>
+    <div className={classes.contractLogicContainer}>
       <ContractInfo {...value} />
       <SearchForm handleSearch={onSearch}></SearchForm>
       {name ? <NameDetails contractAddress={address} name={name} contract={value.initMsg} /> : ""}
