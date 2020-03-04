@@ -1,4 +1,4 @@
-import MuiTypography from "@material-ui/core/Typography";
+import { Alert, AlertTitle } from '@material-ui/lab';
 import * as React from "react";
 
 export interface ErrorMessageProps {
@@ -9,8 +9,9 @@ export interface ErrorMessageProps {
 // This is a page body to display when there is an error
 export function ErrorMessage({ error, clearError }: ErrorMessageProps): JSX.Element {
   return (
-    <MuiTypography color="secondary" variant="h6" onClick={clearError}>
-      Error: {error}
-    </MuiTypography>
+    <Alert severity="error" onClose={clearError}>
+      <AlertTitle>Error</AlertTitle>
+      {error}
+    </Alert>
   );
 }
