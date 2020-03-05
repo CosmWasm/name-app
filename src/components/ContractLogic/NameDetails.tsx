@@ -4,9 +4,9 @@ import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
 import { useError, useSdk } from "../../service";
+import { printableCoin } from "../../service/helpers";
 import { Button, useBaseStyles } from "../../theme";
 import { FormValues } from "../Form";
-import { coinStr } from "./helpers";
 import { ADDRESS_FIELD, TransferForm } from "./TransferForm";
 
 export interface InitMsg {
@@ -110,7 +110,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
           </MuiTypography>
           <MuiTypography variant="body2">Do you want to transfer it?</MuiTypography>
           <MuiTypography className={classes.bottomSpacer} variant="body2">
-            Price: {coinStr(props.contract.transfer_price)}
+            Price: {printableCoin(props.contract.transfer_price)}
           </MuiTypography>
           <TransferForm handleTransfer={doTransfer} />
         </div>
@@ -131,7 +131,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
       <MuiTypography className={classes.isFree} variant="h6">
         {props.name} is available.
         <br />
-        Price: {coinStr(props.contract.purchase_price)}
+        Price: {printableCoin(props.contract.purchase_price)}
       </MuiTypography>
       <Button color="primary" type="submit" onClick={doPurchase}>
         Register

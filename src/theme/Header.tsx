@@ -6,6 +6,8 @@ import { ArrowBack } from "@material-ui/icons";
 import * as React from "react";
 import { Link } from "react-router-dom";
 
+import { printableBalance } from "../service/helpers";
+
 interface ElevationScrollProps {
   readonly children: any;
 }
@@ -28,13 +30,9 @@ export interface HeaderProps {
   children?: React.ReactElement;
 }
 
-function renderBalance({ balance }: Account): string {
-  return balance.map(({ amount, denom }) => `${amount} ${denom}`).join(", ") || "(Empty Account)";
-}
-
 // Show the current account or any error message in the header
 export function Header({ account, children }: HeaderProps, props: any): JSX.Element {
-  const balance = account ? renderBalance(account) : "(Loading Balance)";
+  const balance = account ? printableBalance(account.balance) : "(Loading Balance)";
   const address = account ? account.address : "(No Address)";
 
   return (
