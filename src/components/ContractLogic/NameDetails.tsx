@@ -6,6 +6,7 @@ import { useError, useSdk } from "../../service";
 import { Button, useBaseStyles } from "../../theme";
 import { FormValues } from "../Form";
 import { InitMsg } from "./ContractInfo";
+import { coinStr } from "./helpers";
 import { ADDRESS_FIELD, TransferForm } from "./TransferForm";
 
 export interface NameDetailsProps {
@@ -102,8 +103,9 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
           <MuiTypography color="secondary" variant="h6">
             You own {props.name}
           </MuiTypography>
+          <MuiTypography variant="body2">Do you want to transfer it?</MuiTypography>
           <MuiTypography className={classes.bottomSpacer} variant="body2">
-            Do you want to transfer it?
+            Price: {coinStr(props.contract.transfer_price)}
           </MuiTypography>
           <TransferForm handleTransfer={doTransfer} />
         </div>
@@ -122,10 +124,12 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
   return (
     <div className={classes.card}>
       <MuiTypography className={classes.isFree} variant="h6">
-        {props.name} is free
+        {props.name} is available.
+        <br />
+        Price: {coinStr(props.contract.purchase_price)}
       </MuiTypography>
       <Button color="primary" type="submit" onClick={doPurchase}>
-        Buy
+        Register
       </Button>
     </div>
   );

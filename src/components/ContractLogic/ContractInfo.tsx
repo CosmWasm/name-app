@@ -19,30 +19,13 @@ export interface ContractInfoProps {
   readonly initMsg: InitMsg;
 }
 
-function coinStr(coin?: types.Coin): string {
-  return coin ? `${coin.amount} ${coin.denom}` : "0";
-}
-
 export function ContractInfo(props: ContractInfoProps): JSX.Element {
   const classes = useBaseStyles();
 
   return (
     <div className={classes.card}>
       <MuiTypography variant="h5">Details of name service "{props.label}":</MuiTypography>
-      <ul>
-        <li>
-          <p>Code ID:</p> <p>{props.codeId}</p>
-        </li>
-        <li>
-          <p>Address:</p> <p>{props.address}</p>
-        </li>
-        <li>
-          <p>Purchase price:</p> <p>{coinStr(props.initMsg.purchase_price)}</p>
-        </li>
-        <li>
-          <p>Transfer price:</p> <p>{coinStr(props.initMsg.transfer_price)}</p>
-        </li>
-      </ul>
+      <MuiTypography color="textSecondary">({props.address})</MuiTypography>
     </div>
   );
 }
