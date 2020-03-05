@@ -1,3 +1,4 @@
+import { types } from "@cosmwasm/sdk";
 import { Encoding } from "@iov/encoding";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
@@ -5,9 +6,13 @@ import * as React from "react";
 import { useError, useSdk } from "../../service";
 import { Button, useBaseStyles } from "../../theme";
 import { FormValues } from "../Form";
-import { InitMsg } from "./ContractInfo";
 import { coinStr } from "./helpers";
 import { ADDRESS_FIELD, TransferForm } from "./TransferForm";
+
+export interface InitMsg {
+  readonly purchase_price?: types.Coin;
+  readonly transfer_price?: types.Coin;
+}
 
 export interface NameDetailsProps {
   readonly contractAddress: string;

@@ -1,22 +1,19 @@
 import * as React from "react";
-import { useHistory } from "react-router-dom";
 
 import { useError, useSdk } from "../../service";
 import { useBaseStyles } from "../../theme";
-import { FormValues } from "../Form";
-import { ContractInfo, ContractInfoProps } from "./ContractInfo";
-import { NameDetails } from "./NameDetails";
-import { NAME_FIELD, SearchForm } from "./SearchForm";
+import { InitMsg, NameDetails } from "./NameDetails";
+import { SearchForm, SearchFormProps } from "./SearchForm";
 
 export interface ContractDetailsProps {
   readonly address: string;
   readonly name?: string;
 }
 
-const emptyInfo: ContractInfoProps = {
+type State = SearchFormProps & { readonly initMsg: InitMsg };
+
+const emptyInfo: State = {
   address: "",
-  codeId: 0,
-  creator: "",
   label: "",
   initMsg: {},
 };
@@ -25,9 +22,8 @@ function ContractLogic({ address, name }: ContractDetailsProps): JSX.Element {
   const classes = useBaseStyles();
   const { getClient } = useSdk();
   const { setError } = useError();
-  const history = useHistory();
 
-  const [value, setValue] = React.useState<ContractInfoProps>(emptyInfo);
+  const [value, setValue] = React.useState<State>(emptyInfo);
 
   // get the contracts
   React.useEffect(() => {
@@ -37,15 +33,9 @@ function ContractLogic({ address, name }: ContractDetailsProps): JSX.Element {
       .catch(setError);
   }, [setError, address, getClient]);
 
-  const onSearch = (values: FormValues): void => {
-    const searchName = values[NAME_FIELD];
-    history.push(`/contract/${address}/details/${searchName}`);
-  };
-
   return (
     <div className={classes.contractLogicContainer}>
-      <ContractInfo {...value} />
-      <SearchForm handleSearch={onSearch}></SearchForm>
+      <SearchForm label={value.label} address={address} />
       {name ? <NameDetails contractAddress={address} name={name} contract={value.initMsg} /> : ""}
     </div>
   );
