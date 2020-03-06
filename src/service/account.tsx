@@ -1,6 +1,7 @@
 import { Account } from "@cosmwasm/sdk";
 import * as React from "react";
 
+import { useError } from "./error";
 import { useSdk } from "./wallet";
 
 interface State {
@@ -27,16 +28,21 @@ export const useAccount = (): AccountContextType => React.useContext(AccountCont
 
 export function AccountProvider(props: { readonly children: any }): JSX.Element {
   const [value, setValue] = React.useState<State>({});
-  const { getClient } = useSdk();
+  const { loading, getClient } = useSdk();
+  const { setError } = useError();
 
   const refreshAccount = (): void => {
-    getClient()
-      .getAccount()
-      .then(account => setValue({ account }));
+    console.log(`refreshAccount called: ${loading}`);
+    if (!loading) {
+      getClient()
+        .getAccount()
+        .then(account => setValue({ account }))
+        .catch(setError);
+    }
   };
 
   // this should just be called once on startup
-  React.useEffect(refreshAccount, [getClient]);
+  React.useEffect(refreshAccount, [loading, getClient, setError]);
 
   const context: AccountContextType = {
     refreshAccount,
