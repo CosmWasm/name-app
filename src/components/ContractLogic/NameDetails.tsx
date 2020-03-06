@@ -64,6 +64,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
     /* eslint-disable-next-line @typescript-eslint/camelcase */
     const { purchase_price: purchasePrice } = props.contract;
     const payment = purchasePrice ? [purchasePrice] : undefined;
+    setState({ loading: true });
     try {
       await getClient().execute(
         contractAddress,
@@ -74,6 +75,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
       setState({ owner: address, loading: false });
       refreshAccount();
     } catch (err) {
+      setState({ loading: false });
       setError(err);
     }
     return true;
@@ -83,7 +85,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
     const { transfer_price: transferPrice } = props.contract;
     const payment = transferPrice ? [transferPrice] : undefined;
     const newOwner = values[ADDRESS_FIELD];
-    setState({ loading: true });
+    setState({ owner: address, loading: true });
     try {
       await getClient().execute(
         props.contractAddress,
@@ -94,7 +96,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
       setState({ owner: newOwner, loading: false });
       refreshAccount();
     } catch (err) {
-      setState({ loading: false });
+      setState({ owner: address, loading: false });
       setError(err);
     }
   };
@@ -115,7 +117,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
           <MuiTypography className={classes.bottomSpacer} variant="body2">
             Price: {printableCoin(props.contract.transfer_price)}
           </MuiTypography>
-          <TransferForm handleTransfer={doTransfer} />
+          <TransferForm handleTransfer={doTransfer} loading={state.loading} />
         </div>
       );
     }
@@ -136,7 +138,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
         <br />
         Price: {printableCoin(props.contract.purchase_price)}
       </MuiTypography>
-      <Button color="primary" type="submit" onClick={doPurchase}>
+      <Button color="primary" type="submit" onClick={doPurchase} disabled={state.loading}>
         Register
       </Button>
     </div>

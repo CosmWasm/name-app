@@ -10,10 +10,11 @@ import { TransferValidationSchema } from "../Form/validationSchema";
 export const ADDRESS_FIELD = "addressField";
 
 interface TransferFormProps {
+  readonly loading: boolean;
   readonly handleTransfer: (values: FormValues) => void;
 }
 
-export const TransferForm: React.FC<TransferFormProps> = ({ handleTransfer }: TransferFormProps) => {
+export const TransferForm: React.FC<TransferFormProps> = ({ handleTransfer, loading }: TransferFormProps) => {
   const classes = useBaseStyles();
 
   return (
@@ -27,13 +28,13 @@ export const TransferForm: React.FC<TransferFormProps> = ({ handleTransfer }: Tr
         handleTransfer({ addressField });
       }}
     >
-      {({ handleSubmit, isSubmitting }) => (
+      {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit} className={classes.form}>
           <div className={classes.input}>
             <FormTextField placeholder="cosmos1234567..." name={ADDRESS_FIELD} type="text" />
           </div>
           <div>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={loading}>
               Transfer
             </Button>
           </div>
