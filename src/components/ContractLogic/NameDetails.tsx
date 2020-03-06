@@ -3,7 +3,7 @@ import { Encoding } from "@iov/encoding";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
-import { useError, useSdk } from "../../service";
+import { useAccount, useError, useSdk } from "../../service";
 import { printableCoin } from "../../service/helpers";
 import { Button, useBaseStyles } from "../../theme";
 import { FormValues } from "../Form";
@@ -38,6 +38,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
   const { name, contractAddress } = props;
   const { address, getClient } = useSdk();
   const { setError } = useError();
+  const { refreshAccount } = useAccount();
 
   const [state, setState] = React.useState<State>({ loading: false });
 
@@ -71,6 +72,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
         payment,
       );
       setState({ owner: address, loading: false });
+      refreshAccount();
     } catch (err) {
       setError(err);
     }
@@ -90,6 +92,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
         payment,
       );
       setState({ owner: newOwner, loading: false });
+      refreshAccount();
     } catch (err) {
       setState({ loading: false });
       setError(err);
