@@ -6,11 +6,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      height: "100%",
+      height: "102vh",
       background: "#ebf5fc",
-      [theme.breakpoints.up("sm")]: {
-        height: "105vh",
-      },
     },
   }),
 );

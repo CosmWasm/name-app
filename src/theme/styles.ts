@@ -111,11 +111,30 @@ export const useBaseStyles = makeStyles((theme: Theme) =>
       color: "#3d5af1",
     },
     form: {
-      height: "115px",
+      height: "150px",
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between",
+      justifyContent: "space-around",
       maxWidth: "600px",
+      padding: "10px",
+      "& p": {
+        fontSize: "0.75rem",
+      },
+      "& .MuiFormHelperText-root.Mui-error": {
+        marginTop: "0",
+      },
+      [theme.breakpoints.up("sm")]: {
+        height: "150px",
+        justifyContent: "space-around",
+        margin: "20px",
+        padding: "20px",
+        "& p": {
+          fontSize: "1rem",
+        },
+        "& .MuiFormHelperText-root.Mui-error": {
+          marginTop: "3px",
+        },
+      },
     },
     input: {
       display: "flex",
