@@ -85,7 +85,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
     const { transfer_price: transferPrice } = props.contract;
     const payment = transferPrice ? [transferPrice] : undefined;
     const newOwner = values[ADDRESS_FIELD];
-    setState({ loading: true });
+    setState({ owner: address, loading: true });
     try {
       await getClient().execute(
         props.contractAddress,
@@ -117,7 +117,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
           <MuiTypography className={classes.bottomSpacer} variant="body2">
             Price: {printableCoin(props.contract.transfer_price)}
           </MuiTypography>
-          <TransferForm handleTransfer={doTransfer} />
+          <TransferForm handleTransfer={doTransfer} loading={state.loading} />
         </div>
       );
     }
