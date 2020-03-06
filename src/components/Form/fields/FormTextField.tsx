@@ -6,11 +6,13 @@ interface TextFieldProps {
   name: string;
   type: string;
   placeholder: string;
+  InputProps?: any;
 }
 
 export const FormTextField: React.FC<TextFieldProps & FieldAttributes<{}>> = ({
   type,
   placeholder,
+  InputProps,
   ...props
 }: TextFieldProps) => {
   const [field, meta] = useField<{}>(props);
@@ -23,6 +25,7 @@ export const FormTextField: React.FC<TextFieldProps & FieldAttributes<{}>> = ({
         variant="outlined"
         type={type}
         label={placeholder}
+        InputProps={InputProps}
         {...field}
         helperText={errorText}
         error={!!errorText}
@@ -34,6 +37,7 @@ export const FormTextField: React.FC<TextFieldProps & FieldAttributes<{}>> = ({
     <TextField
       type={type}
       placeholder={placeholder}
+      InputProps={InputProps}
       fullWidth
       {...field}
       helperText={errorText}

@@ -1,12 +1,18 @@
+import { types } from "@cosmwasm/sdk";
 import { Encoding } from "@iov/encoding";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
 import { useError, useSdk } from "../../service";
+import { printableCoin } from "../../service/helpers";
 import { Button, useBaseStyles } from "../../theme";
 import { FormValues } from "../Form";
-import { InitMsg } from "./ContractInfo";
 import { ADDRESS_FIELD, TransferForm } from "./TransferForm";
+
+export interface InitMsg {
+  readonly purchase_price?: types.Coin;
+  readonly transfer_price?: types.Coin;
+}
 
 export interface NameDetailsProps {
   readonly contractAddress: string;
@@ -102,8 +108,9 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
           <MuiTypography color="secondary" variant="h6">
             You own {props.name}
           </MuiTypography>
+          <MuiTypography variant="body2">Do you want to transfer it?</MuiTypography>
           <MuiTypography className={classes.bottomSpacer} variant="body2">
-            Do you want to transfer it?
+            Price: {printableCoin(props.contract.transfer_price)}
           </MuiTypography>
           <TransferForm handleTransfer={doTransfer} />
         </div>
@@ -122,10 +129,12 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
   return (
     <div className={classes.card}>
       <MuiTypography className={classes.isFree} variant="h6">
-        {props.name} is free
+        {props.name} is available.
+        <br />
+        Price: {printableCoin(props.contract.purchase_price)}
       </MuiTypography>
       <Button color="primary" type="submit" onClick={doPurchase}>
-        Buy
+        Register
       </Button>
     </div>
   );
