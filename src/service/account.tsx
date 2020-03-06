@@ -12,9 +12,7 @@ export interface AccountContextType extends State {
   readonly refreshAccount: () => void;
 }
 
-function dummyRefresh(): void {
-  console.log("Calling uninitialized account callback");
-}
+function dummyRefresh(): void {}
 
 const defaultContext = (): AccountContextType => {
   return {
@@ -32,7 +30,6 @@ export function AccountProvider(props: { readonly children: any }): JSX.Element 
   const { setError } = useError();
 
   const refreshAccount = (): void => {
-    console.log(`refreshAccount called: ${loading}`);
     if (!loading) {
       getClient()
         .getAccount()
