@@ -7,12 +7,12 @@ To run this locally against a demo blockchain, you need to set up a few things:
 CI server:
 
 ```sh
-git clone https://github.com/confio/cosmwasm-js.git
+git clone https://github.com/CosmWasm/cosmwasm-js.git
 cd cosmwasm-js
-./scripts/cosm/start.sh
+./scripts/wasmd/start.sh
 ```
 
-A faucet to provide initial tokens ([see README](https://github.com/confio/cosmwasm-js/tree/master/packages/faucet)):
+A faucet to provide initial tokens ([see README](https://github.com/CosmWasm/cosmwasm-js/tree/master/packages/faucet)):
 
 ```sh
 cd cosmwasm-js
