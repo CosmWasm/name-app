@@ -59,7 +59,7 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
         if (config.faucetUrl) {
           const acct = await client.getAccount();
           if (!acct?.balance?.length) {
-            await ky.post(config.faucetUrl, { json: { ticker: "COSM", address } });
+            await ky.post(config.faucetUrl, { json: { ticker: "SCRT", address } });
           }
         }
 

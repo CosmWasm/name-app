@@ -31,7 +31,7 @@ export const TransferForm: React.FC<TransferFormProps> = ({ handleTransfer, load
       {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit} className={classes.form}>
           <div className={classes.input}>
-            <FormTextField placeholder="cosmos1234567..." name={ADDRESS_FIELD} type="text" />
+            <FormTextField placeholder="enigma1234567..." name={ADDRESS_FIELD} type="text" />
           </div>
           <div>
             <Button type="submit" disabled={loading}>

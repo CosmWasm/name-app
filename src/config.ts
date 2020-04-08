@@ -8,13 +8,13 @@ export interface AppConfig {
 const local: AppConfig = {
   httpUrl: "http://localhost:1317",
   faucetUrl: "http://localhost:8000/credit",
-  codeId: 2,
+  codeId: 1,
 };
 
 const demo: AppConfig = {
-  httpUrl: "https://lcd.demo-07.cosmwasm.com",
-  faucetUrl: "https://faucet.demo-07.cosmwasm.com/credit",
-  codeId: 2,
+  httpUrl: "http://cors-container.herokuapp.com/http://bootstrap.testnet.enigma.co",
+  faucetUrl: "https://faucet.testnet.enigma.co/claim",
+  codeId: 1,
 };
 
 // REACT_APP_LOCAL is set via `yarn start:local`
