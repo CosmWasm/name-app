@@ -29,6 +29,7 @@ Deploy the contract
 ```
 
 A faucet to provide initial tokens ([see README](https://github.com/CosmWasm/cosmwasm-js/tree/master/packages/faucet)):
+NB [WIP for Enigma faucet](https://github.com/levackt/cosmwasm-js/pull/1)
 
 ```sh
 cd cosmwasm-js
