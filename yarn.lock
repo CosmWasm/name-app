@@ -889,15 +889,16 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@cosmwasm/sdk@^0.7.0-alpha.5":
-  version "0.7.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/@cosmwasm/sdk/-/sdk-0.7.0-alpha.5.tgz#bc2d0321faf6afc43b966f4281174ea68c1d241e"
-  integrity sha512-kl/e8vSH4QEOpl/OtijEocMX4GMjGnvNzhlwILvYJ9GJj3kkcnY5D/sI7Ub9vMCFziLP/0KxPzyfQ8MD9nh7FQ==
+"@cosmwasm/sdk@^0.7.7":
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/@cosmwasm/sdk/-/sdk-0.7.7.tgz#c8c7af854a5f1745999809957463ed101bca1cfb"
+  integrity sha512-zT3iO30aJPOPCdNxhFzMYDygPShiEzRUIzg0oi7xZfRwNqmuWE63NmZo5+BhOTMKL398b4D3zeEL6kH6O+aawg==
   dependencies:
     "@iov/crypto" "^2.1.0"
     "@iov/encoding" "^2.1.0"
     "@iov/utils" "^2.0.2"
     axios "^0.19.0"
+    fast-deep-equal "^3.1.1"
     pako "^1.0.11"
 
 "@csstools/convert-colors@^1.4.0":

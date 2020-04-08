@@ -12,8 +12,8 @@ const local: AppConfig = {
 };
 
 const demo: AppConfig = {
-  httpUrl: "https://lcd.demo-07.cosmwasm.com",
-  faucetUrl: "https://faucet.demo-07.cosmwasm.com/credit",
+  httpUrl: "https://lcd.demo-071.cosmwasm.com",
+  faucetUrl: "https://faucet.demo-071.cosmwasm.com/credit",
   codeId: 2,
 };
 
