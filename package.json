@@ -9,7 +9,7 @@
   ],
   "homepage": "http://confio.github.io/name-app/",
   "dependencies": {
-    "@cosmwasm/sdk": "^0.7.7",
+    "@cosmwasm/sdk": "^0.8.0",
     "@date-io/core": "^2.4.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-regular-svg-icons": "^5.12.1",

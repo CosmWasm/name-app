@@ -45,7 +45,8 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
   React.useEffect(() => {
     setState({ loading: true });
     getClient()
-      .queryContractSmart(contractAddress, { resolverecord: { name } })
+      /* eslint-disable-next-line @typescript-eslint/camelcase */
+      .queryContractSmart(contractAddress, { resolve_record: { name } })
       .then(res => {
         const o = parseQueryJson<QueryResponse>(res);
         setState({ owner: o.address, loading: false });
