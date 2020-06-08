@@ -10,7 +10,7 @@ often pulling in design from `theme`. They may contain some minimal local state,
 to the user interaction (eg. contents of a form field, value of a selector, etc).
 
 "Containers" provide a bridge to services and more "global" state, passing in the context to components
-as props, which control their rendering. This allows use to easily storyboard out "components" without needing
+as props, which control their rendering. This allows us to easily storyboard out "components" without needing
 a backend, which providing isolated containers which can be tested that just control connection of backend state to props.
 
 We try to make exclusive use of functional components and the "new" React hooks APIs.

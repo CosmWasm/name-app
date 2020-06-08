@@ -1,4 +1,4 @@
-import { types } from "@cosmwasm/sdk";
+import { Coin } from "@cosmwasm/sdk";
 import { Encoding } from "@iov/encoding";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
@@ -10,8 +10,8 @@ import { FormValues } from "../Form";
 import { ADDRESS_FIELD, TransferForm } from "./TransferForm";
 
 export interface InitMsg {
-  readonly purchase_price?: types.Coin;
-  readonly transfer_price?: types.Coin;
+  readonly purchase_price?: Coin;
+  readonly transfer_price?: Coin;
 }
 
 export interface NameDetailsProps {

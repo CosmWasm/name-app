@@ -1,15 +1,15 @@
-import { types } from "@cosmwasm/sdk";
+import { Coin } from "@cosmwasm/sdk";
 import { Decimal } from "@iov/encoding";
 
 // NARROW NO-BREAK SPACE (U+202F)
 const thinSpace = "\u202F";
 
-export function printableBalance(balance?: readonly types.Coin[]): string {
+export function printableBalance(balance?: readonly Coin[]): string {
   if (!balance || balance.length === 0) return "–";
   return balance.map(printableCoin).join(", ");
 }
 
-export function printableCoin(coin?: types.Coin): string {
+export function printableCoin(coin?: Coin): string {
   if (!coin) {
     return "0";
   }
