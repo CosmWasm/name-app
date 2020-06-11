@@ -1,5 +1,4 @@
 import { Coin } from "@cosmwasm/sdk";
-import { Encoding } from "@iov/encoding";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
@@ -25,10 +24,6 @@ export interface State {
   readonly loading: boolean;
 }
 
-function parseQueryJson<T>(raw: Uint8Array): T {
-  return JSON.parse(Encoding.fromUtf8(raw));
-}
-
 interface QueryResponse {
   readonly address: string;
 }
@@ -48,8 +43,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
       /* eslint-disable-next-line @typescript-eslint/camelcase */
       .queryContractSmart(contractAddress, { resolve_record: { name } })
       .then(res => {
-        const o = parseQueryJson<QueryResponse>(res);
-        setState({ owner: o.address, loading: false });
+        setState({ owner: res.address, loading: false });
       })
       .catch(err => {
         setState({ loading: false });
