@@ -1,12 +1,6 @@
-import {
-  encodeSecp256k1Pubkey,
-  pubkeyToAddress,
-  Secp256k1Pen,
-  SigningCallback,
-  SigningCosmWasmClient,
-} from "@cosmwasm/sdk";
-import { StdSignature } from "@cosmwasm/sdk/types/types";
-import { Bip39, Random } from "@iov/crypto";
+import { SigningCallback, SigningCosmWasmClient } from "@cosmjs/cosmwasm";
+import { Bip39, Random } from "@cosmjs/crypto";
+import { encodeSecp256k1Pubkey, pubkeyToAddress, Secp256k1Pen, StdSignature } from "@cosmjs/sdk38";
 
 // generateMnemonic will give you a fresh mnemonic
 // it is up to the app to store this somewhere

@@ -1,4 +1,4 @@
-import { Coin } from "@cosmwasm/sdk";
+import { Coin } from "@cosmjs/sdk38";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
