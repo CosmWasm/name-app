@@ -1,4 +1,4 @@
-import { SigningCosmWasmClient } from "@cosmwasm/sdk";
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm";
 import ky from "ky";
 import * as React from "react";
 import { useEffect, useState } from "react";

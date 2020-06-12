@@ -1,5 +1,4 @@
-import { types } from "@cosmwasm/sdk";
-import { Encoding } from "@iov/encoding";
+import { Coin } from "@cosmjs/sdk38";
 import MuiTypography from "@material-ui/core/Typography";
 import * as React from "react";
 
@@ -10,8 +9,8 @@ import { FormValues } from "../Form";
 import { ADDRESS_FIELD, TransferForm } from "./TransferForm";
 
 export interface InitMsg {
-  readonly purchase_price?: types.Coin;
-  readonly transfer_price?: types.Coin;
+  readonly purchase_price?: Coin;
+  readonly transfer_price?: Coin;
 }
 
 export interface NameDetailsProps {
@@ -23,10 +22,6 @@ export interface NameDetailsProps {
 export interface State {
   readonly owner?: string;
   readonly loading: boolean;
-}
-
-function parseQueryJson<T>(raw: Uint8Array): T {
-  return JSON.parse(Encoding.fromUtf8(raw));
 }
 
 interface QueryResponse {
@@ -48,8 +43,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
       /* eslint-disable-next-line @typescript-eslint/camelcase */
       .queryContractSmart(contractAddress, { resolve_record: { name } })
       .then(res => {
-        const o = parseQueryJson<QueryResponse>(res);
-        setState({ owner: o.address, loading: false });
+        setState({ owner: res.address, loading: false });
       })
       .catch(err => {
         setState({ loading: false });
