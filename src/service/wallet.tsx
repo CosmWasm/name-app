@@ -53,7 +53,7 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
   // just call this once on startup
   useEffect(() => {
     loadWallet()
-      .then(wallet => connect(config.httpUrl, wallet))
+      .then((wallet) => connect(config.httpUrl, wallet))
       .then(async ({ address, client }) => {
         // load from faucet if needed
         if (config.faucetUrl) {
