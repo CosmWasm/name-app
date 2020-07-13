@@ -11,13 +11,13 @@ const local: AppConfig = {
   codeId: 2,
 };
 
-const demo: AppConfig = {
-  httpUrl: "https://lcd.demo-08.cosmwasm.com",
-  faucetUrl: "https://faucet.demo-08.cosmwasm.com/credit",
+const demonet: AppConfig = {
+  httpUrl: "https://lcd.demo-09.cosmwasm.com",
+  faucetUrl: "https://faucet.demo-09.cosmwasm.com/credit",
   codeId: 2,
 };
 
 // REACT_APP_LOCAL is set via `yarn start:local`
 const isLocal = process.env.NODE_ENV !== "production" && !!process.env.REACT_APP_LOCAL;
 
-export const config = isLocal ? local : demo;
+export const config = isLocal ? local : demonet;

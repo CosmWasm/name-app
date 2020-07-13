@@ -7,12 +7,12 @@
     "Ethan Frey <ethanfrey@users.noreply.github.com>",
     "Simon Warta"
   ],
-  "homepage": "http://confio.github.io/name-app/",
+  "homepage": "https://cosmwasm.github.io/name-app/",
   "dependencies": {
-    "@cosmjs/cosmwasm": "^0.20.0",
-    "@cosmjs/crypto": "^0.20.0",
-    "@cosmjs/math": "^0.20.0",
-    "@cosmjs/sdk38": "^0.20.0",
+    "@cosmjs/cosmwasm": "^0.21.1",
+    "@cosmjs/crypto": "^0.21.1",
+    "@cosmjs/math": "^0.21.1",
+    "@cosmjs/sdk38": "^0.21.1",
     "@date-io/core": "^2.4.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-regular-svg-icons": "^5.12.1",

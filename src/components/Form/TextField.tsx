@@ -49,7 +49,7 @@ export const longerThan = (minLength: number): FieldValidator<FieldInputValue> =
   };
 };
 
-export function composeValidators<T>(...validators: readonly FieldValidator<T>[]): FieldValidator<T> {
+export function composeValidators<T>(...validators: ReadonlyArray<FieldValidator<T>>): FieldValidator<T> {
   return (value, allValues, meta): ValidationError => {
     for (const validator of validators) {
       const validationError = validator(value, allValues, meta);
