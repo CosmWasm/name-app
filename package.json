@@ -46,7 +46,7 @@
     "redux-promise-middleware": "^6.1.2",
     "redux-promise-middleware-actions": "^3.0.1",
     "redux-thunk": "^2.3.0",
-    "typescript": "~3.7.2",
+    "typescript": "~3.9",
     "yup": "^0.28.1"
   },
   "scripts": {
