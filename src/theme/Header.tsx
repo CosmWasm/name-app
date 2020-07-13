@@ -46,7 +46,7 @@ export function Header({ account, children }: HeaderProps, props: any): JSX.Elem
               </IconButton>
             </Link>
             <MuiTypography variant="h6">
-              {address} - {balance}
+              {address} ({balance})
             </MuiTypography>
           </Toolbar>
         </AppBar>
