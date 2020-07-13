@@ -29,7 +29,7 @@ function ContractLogic({ address, name }: ContractDetailsProps): JSX.Element {
   React.useEffect(() => {
     getClient()
       .getContract(address)
-      .then(info => setValue({ ...info, address }))
+      .then((info) => setValue({ ...info, address }))
       .catch(setError);
   }, [setError, address, getClient]);
 

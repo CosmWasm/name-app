@@ -17,13 +17,13 @@ function ContractList(): JSX.Element {
   React.useEffect(() => {
     getClient()
       .getContracts(defaultCodeId)
-      .then(contracts => setContracts(contracts))
+      .then((contracts) => setContracts(contracts))
       .catch(setError);
   }, [getClient, setError]);
 
   return (
     <List>
-      {contracts.map(props => (
+      {contracts.map((props) => (
         <ContractItem {...props} key={props.address} />
       ))}
     </List>

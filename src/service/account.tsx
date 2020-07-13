@@ -33,7 +33,7 @@ export function AccountProvider(props: { readonly children: any }): JSX.Element 
     if (!loading) {
       getClient()
         .getAccount()
-        .then(account => setValue({ account }))
+        .then((account) => setValue({ account }))
         .catch(setError);
     }
   };

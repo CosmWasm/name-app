@@ -42,10 +42,10 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
     getClient()
       /* eslint-disable-next-line @typescript-eslint/camelcase */
       .queryContractSmart(contractAddress, { resolve_record: { name } })
-      .then(res => {
+      .then((res) => {
         setState({ owner: res.address, loading: false });
       })
-      .catch(err => {
+      .catch((err) => {
         setState({ loading: false });
         // a not found error means it is free, other errors need to be reported
         if (!err.toString().includes("NameRecord not found")) {
