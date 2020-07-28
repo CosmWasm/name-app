@@ -8,15 +8,15 @@ import { Button, useBaseStyles } from "../../theme";
 import { FormValues } from "../Form";
 import { ADDRESS_FIELD, TransferForm } from "./TransferForm";
 
-export interface InitMsg {
-  readonly purchase_price?: Coin;
-  readonly transfer_price?: Coin;
+export interface Prices {
+  readonly purchase?: Coin;
+  readonly transfer?: Coin;
 }
 
 export interface NameDetailsProps {
   readonly contractAddress: string;
   readonly name: string;
-  readonly contract: InitMsg;
+  readonly prices: Prices;
 }
 
 export interface State {
@@ -56,8 +56,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
 
   // TODO: add visual feedback for "in process state"
   const doPurchase = async (): Promise<boolean> => {
-    /* eslint-disable-next-line @typescript-eslint/camelcase */
-    const { purchase_price: purchasePrice } = props.contract;
+    const purchasePrice = props.prices.purchase;
     const payment = purchasePrice ? [purchasePrice] : undefined;
     setState({ loading: true });
     try {
@@ -77,7 +76,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
   };
 
   const doTransfer = async (values: FormValues): Promise<void> => {
-    const { transfer_price: transferPrice } = props.contract;
+    const transferPrice = props.prices.transfer;
     const payment = transferPrice ? [transferPrice] : undefined;
     const newOwner = values[ADDRESS_FIELD];
     setState({ owner: address, loading: true });
@@ -110,7 +109,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
           </MuiTypography>
           <MuiTypography variant="body2">Do you want to transfer it?</MuiTypography>
           <MuiTypography className={classes.bottomSpacer} variant="body2">
-            Price: {printableCoin(props.contract.transfer_price)}
+            Price: {printableCoin(props.prices.transfer)}
           </MuiTypography>
           <TransferForm handleTransfer={doTransfer} loading={state.loading} />
         </div>
@@ -131,7 +130,7 @@ export function NameDetails(props: NameDetailsProps): JSX.Element {
       <MuiTypography className={classes.isFree} variant="h6">
         {props.name} is available.
         <br />
-        Price: {printableCoin(props.contract.purchase_price)}
+        Price: {printableCoin(props.prices.purchase)}
       </MuiTypography>
       <Button color="primary" type="submit" onClick={doPurchase} disabled={state.loading}>
         Register
