@@ -1,4 +1,4 @@
-import { Account } from "@cosmjs/sdk38";
+import { Account } from "@cosmjs/launchpad";
 import * as React from "react";
 
 import { useError } from "./error";

@@ -1,11 +1,12 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm";
+import { OfflineSigner } from "@cosmjs/launchpad";
 import ky from "ky";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
 import { AppConfig } from "../config";
 import { useError } from "./error";
-import { burnerWallet, connect, Wallet } from "./sdk";
+import { createClient, loadOrCreateWallet } from "./sdk";
 
 export interface CosmWasmContextType {
   readonly loading: boolean;
@@ -32,13 +33,13 @@ export interface WalletProviderProps {
 
 export interface SdkProviderProps {
   config: AppConfig;
-  loadWallet: () => Promise<Wallet>;
+  loadWallet: () => Promise<OfflineSigner>;
   children: any;
 }
 
 export function BurnerWalletProvider(props: WalletProviderProps): JSX.Element {
   return (
-    <SdkProvider config={props.config} loadWallet={burnerWallet}>
+    <SdkProvider config={props.config} loadWallet={loadOrCreateWallet}>
       {props.children}
     </SdkProvider>
   );
@@ -53,8 +54,9 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
   // just call this once on startup
   useEffect(() => {
     loadWallet()
-      .then((wallet) => connect(config.httpUrl, wallet))
-      .then(async ({ address, client }) => {
+      .then((signer) => createClient(config.httpUrl, signer))
+      .then(async (client) => {
+        const address = client.senderAddress;
         // load from faucet if needed
         if (config.faucetUrl) {
           const acct = await client.getAccount();

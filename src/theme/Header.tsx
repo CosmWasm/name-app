@@ -1,4 +1,4 @@
-import { Account } from "@cosmjs/sdk38";
+import { Account } from "@cosmjs/launchpad";
 import { AppBar, IconButton, Toolbar } from "@material-ui/core";
 import MuiTypography from "@material-ui/core/Typography";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
