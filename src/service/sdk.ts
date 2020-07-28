@@ -1,6 +1,6 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm";
 import { Bip39, Random } from "@cosmjs/crypto";
-import { OfflineSigner, Secp256k1Wallet } from "@cosmjs/launchpad";
+import { makeCosmoshubPath, OfflineSigner, Secp256k1Wallet } from "@cosmjs/launchpad";
 
 // generateMnemonic will give you a fresh mnemonic
 // it is up to the app to store this somewhere
@@ -20,9 +20,10 @@ export function loadOrCreateMnemonic(): string {
   return generated;
 }
 
-export async function loadOrCreateWallet(): Promise<OfflineSigner> {
+export async function loadOrCreateWallet(addressPrefix: string): Promise<OfflineSigner> {
   const mnemonic = loadOrCreateMnemonic();
-  const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic);
+  const hdPath = makeCosmoshubPath(0);
+  const wallet = await Secp256k1Wallet.fromMnemonic(mnemonic, hdPath, addressPrefix);
   return wallet;
 }
 

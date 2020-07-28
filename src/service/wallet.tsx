@@ -33,7 +33,7 @@ export interface WalletProviderProps {
 
 export interface SdkProviderProps {
   config: AppConfig;
-  loadWallet: () => Promise<OfflineSigner>;
+  loadWallet: (addressPrefix: string) => Promise<OfflineSigner>;
   children: any;
 }
 
@@ -53,7 +53,7 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
 
   // just call this once on startup
   useEffect(() => {
-    loadWallet()
+    loadWallet(config.addressPrefix)
       .then((signer) => createClient(config.httpUrl, signer))
       .then(async (client) => {
         const address = client.senderAddress;
@@ -74,7 +74,7 @@ export function SdkProvider(props: SdkProviderProps): JSX.Element {
       .catch(setError);
 
     // TODO: return a clean-up function???
-  }, [config.httpUrl, config.faucetUrl, loadWallet, setError]);
+  }, [config.httpUrl, config.faucetUrl, config.addressPrefix, loadWallet, setError]);
 
   return <CosmWasmContext.Provider value={value}>{props.children}</CosmWasmContext.Provider>;
 }
