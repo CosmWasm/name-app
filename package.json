@@ -35,10 +35,10 @@
     ]
   },
   "dependencies": {
-    "@cosmjs/cosmwasm": "^0.21.1",
-    "@cosmjs/crypto": "^0.21.1",
-    "@cosmjs/math": "^0.21.1",
-    "@cosmjs/sdk38": "^0.21.1",
+    "@cosmjs/cosmwasm": "^0.22.0",
+    "@cosmjs/crypto": "^0.22.0",
+    "@cosmjs/launchpad": "^0.22.0",
+    "@cosmjs/math": "^0.22.0",
     "@date-io/core": "^2.4.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-regular-svg-icons": "^5.12.1",

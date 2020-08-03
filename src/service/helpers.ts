@@ -1,5 +1,5 @@
+import { Coin } from "@cosmjs/launchpad";
 import { Decimal } from "@cosmjs/math";
-import { Coin } from "@cosmjs/sdk38";
 
 // NARROW NO-BREAK SPACE (U+202F)
 const thinSpace = "\u202F";
