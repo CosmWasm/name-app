@@ -14,8 +14,8 @@ const local: AppConfig = {
 };
 
 const demonet: AppConfig = {
-  httpUrl: "https://lcd.demo-09.cosmwasm.com",
-  faucetUrl: "https://faucet.demo-09.cosmwasm.com/credit",
+  httpUrl: "https://lcd.demo-10.cosmwasm.com",
+  faucetUrl: "https://faucet.demo-10.cosmwasm.com/credit",
   addressPrefix: "cosmos",
   codeId: 2,
 };
