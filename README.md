@@ -1,3 +1,5 @@
+**WARNING** This is deprecated and works with an old version of CosmWasm and CosmJS. For a recent version of this, please check out our [dApps repo](https://github.com/CosmWasm/dApps) and in particular the [name-service app](https://github.com/CosmWasm/dApps/tree/master/packages/name-service).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Set up local servers....
